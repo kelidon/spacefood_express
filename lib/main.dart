@@ -1,8 +1,11 @@
+import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 
 import 'game.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Flame.device.fullScreen();
   runApp(const MyApp());
 }
 

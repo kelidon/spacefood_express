@@ -30,11 +30,10 @@ class PlayerComponent extends SpriteAnimationComponent
         KeyboardHandler,
         FlameBlocListenable<InventoryBloc, InventoryState> {
   bool destroyed = false;
+  double speed = 10.0;
 
-  //late Timer bulletCreator;
 
   PlayerComponent() : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
-    //bulletCreator = Timer(0.5, repeat: true, onTick: _createBullet);
 
     add(RectangleHitbox());
   }
@@ -59,27 +58,6 @@ class PlayerComponent extends SpriteAnimationComponent
     this.state = state;
   }
 
-  // void _createBullet() {
-  //   final bulletX = x + 20;
-  //   final bulletY = y + 20;
-  //
-  //   game.add(
-  //     BulletComponent(
-  //       bulletX,
-  //       bulletY,
-  //       state?.weapon ?? Weapon.bullet,
-  //     ),
-  //   );
-  // }
-  //
-  // void beginFire() {
-  //   bulletCreator.start();
-  // }
-  //
-  // void stopFire() {
-  //   bulletCreator.stop();
-  // }
-
   void move(double deltaX, double deltaY) {
     x += deltaX;
     y += deltaY;
@@ -88,7 +66,7 @@ class PlayerComponent extends SpriteAnimationComponent
   @override
   void update(double dt) {
     super.update(dt);
-    //bulletCreator.update(dt);
+
     if (destroyed) {
       removeFromParent();
     }

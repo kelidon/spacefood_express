@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class GameStatsController extends Component with HasGameReference<SpaceFoodGame>
   }
 }
 
-class SpaceFoodGame extends FlameGame {
+class SpaceFoodGame extends FlameGame
+    with PanDetector, HasCollisionDetection, HasKeyboardHandlerComponents {
   late PlayerComponent player;
 
   final GameStatsBloc statsBloc;
@@ -56,4 +58,28 @@ class SpaceFoodGame extends FlameGame {
 
   @override
   Color backgroundColor() => Colors.deepPurple;
+
+  @override
+  void onPanStart(_) {
+    //player.beginFire();
+  }
+
+  @override
+  void onPanEnd(_) {
+    //player.stopFire();
+  }
+
+  @override
+  void onPanCancel() {
+    //player.stopFire();
+  }
+
+  @override
+  void onPanUpdate(DragUpdateInfo info) {
+    player.move(info.delta.global.x, info.delta.global.y);
+  }
+
+  void increaseScore() {
+    statsBloc.add(const ScoreEventAdded(100));
+  }
 }
