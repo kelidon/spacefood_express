@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -30,11 +32,15 @@ class PlayerComponent extends SpriteAnimationComponent
         KeyboardHandler,
         FlameBlocListenable<InventoryBloc, InventoryState> {
   bool destroyed = false;
-  double speed = 10.0;
 
+  double dAngle = 10.0;
+
+  //todo class
+  double xc = 105;
+  double yc = 512;
+  double r = 13;
 
   PlayerComponent() : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
-
     add(RectangleHitbox());
   }
 
@@ -63,20 +69,33 @@ class PlayerComponent extends SpriteAnimationComponent
     y += deltaY;
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
+  void circle() {
+    double t = atan2(y - yc, x - xc);
 
-    if (destroyed) {
-      removeFromParent();
-    }
+    x = xc + r * cos(t + dAngle);
+    y = yc + r * sin(t + dAngle);
   }
+
+  // void flyAway() {}
 
   // void takeHit() {
   //   game.add(ExplosionComponent(x, y));
   //   removeFromParent();
   //   game.statsBloc.add(const PlayerDied());
   // }
+
+
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+
+      circle();
+
+    if (destroyed) {
+      removeFromParent();
+    }
+  }
 
   @override
   bool onKeyEvent(
