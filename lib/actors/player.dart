@@ -4,13 +4,16 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:spacefood_express/actors/planet.dart';
 
-import '../blocs/game_stats/game_stats_bloc.dart';
-import '../blocs/inventory/inventory_bloc.dart';
-import '../flame_layer/spacefood_game.dart';
+import 'package:spacefood_express/blocs/game_stats/game_stats_bloc.dart';
+import 'package:spacefood_express/blocs/inventory/inventory_bloc.dart';
+import 'package:spacefood_express/flame_layer/spacefood_game.dart';
 
 class PlayerController extends Component
-    with HasGameReference<SpaceFoodGame>, FlameBlocListenable<GameStatsBloc, GameStatsState> {
+    with
+        HasGameReference<SpaceFoodGame>,
+        FlameBlocListenable<GameStatsBloc, GameStatsState> {
   @override
   bool listenWhen(GameStatsState previousState, GameStatsState newState) {
     return previousState.status != newState.status;
@@ -18,9 +21,14 @@ class PlayerController extends Component
 
   @override
   void onNewState(GameStatsState state) {
-    if (state.status == GameStatus.respawn || state.status == GameStatus.initial) {
+    if (state.status == GameStatus.respawn ||
+        state.status == GameStatus.initial) {
       game.statsBloc.add(const PlayerRespawned());
-      parent?.add(game.player = PlayerComponent());
+      parent?.add(
+        game.player = PlayerComponent(
+          PlanetComponent(20, 105, 505, -0.05, 100, 100),
+        ),
+      );
     }
   }
 }
@@ -34,18 +42,24 @@ class PlayerComponent extends SpriteAnimationComponent
   bool destroyed = false;
   bool isFlying = false;
 
-  double dAngle = -0.05;
+  double dAngle;
 
   //todo class
   ///4real bro
-  double xc = 1600;
-  double yc = 1600;
-  double r = 13;
+  double xc;
+  double yc;
+  double r;
 
   late double dY;
   late double dX;
 
-  PlayerComponent() : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
+  PlayerComponent(
+    PlanetComponent planetComponent,
+  )   : xc = planetComponent.xCenter,
+        yc = planetComponent.yCenter,
+        dAngle = planetComponent.dAngle,
+        r = planetComponent.radius,
+        super(size: Vector2(50, 75), position: Vector2(100, 500)) {
     add(RectangleHitbox());
   }
 
@@ -95,11 +109,14 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   ///
-  void hitPlanet() {
+  void hitPlanet(
+    PlanetComponent planetComponent,
+  ) {
     isFlying = false;
-    xc = x + 21;
-    yc = y - 20;
-    r = 29;
+    xc = planetComponent.x;
+    yc = planetComponent.y;
+    r = planetComponent.radius;
+    dAngle = planetComponent.dAngle;
   }
 
   @override
@@ -134,9 +151,8 @@ class PlayerComponent extends SpriteAnimationComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
 
-    ///
-    // if (other is PlanetComponent) {
-    //   hitPlanet(other);
-    // }
+    if (other is PlanetComponent && isFlying) {
+      hitPlanet(other);
+    }
   }
 }
