@@ -32,13 +32,17 @@ class PlayerComponent extends SpriteAnimationComponent
         KeyboardHandler,
         FlameBlocListenable<InventoryBloc, InventoryState> {
   bool destroyed = false;
+  bool isFlying = false;
 
-  double dAngle = 10.0;
+  double dAngle = -0.05;
 
   //todo class
   double xc = 105;
   double yc = 512;
   double r = 13;
+
+  late double dY;
+  late double dX;
 
   PlayerComponent() : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
     add(RectangleHitbox());
@@ -69,28 +73,43 @@ class PlayerComponent extends SpriteAnimationComponent
     y += deltaY;
   }
 
-  void circle() {
+  void _circle() {
     double t = atan2(y - yc, x - xc);
 
     x = xc + r * cos(t + dAngle);
     y = yc + r * sin(t + dAngle);
   }
 
-  // void flyAway() {}
+  void liftoff() {
+    isFlying = true;
 
-  // void takeHit() {
-  //   game.add(ExplosionComponent(x, y));
-  //   removeFromParent();
-  //   game.statsBloc.add(const PlayerDied());
-  // }
+    double t = atan2(y - yc, x - xc);
+    dX = -x + xc + r * cos(t + dAngle);
+    dY = -y + yc + r * sin(t + dAngle);
+  }
 
+  void _flyAway() {
+    x += dX;
+    y += dY;
+  }
 
+  ///
+  void hitPlanet() {
+    isFlying = false;
+    xc = x + 21;
+    yc = y - 20;
+    r = 29;
+  }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-      circle();
+    if (isFlying) {
+      _flyAway();
+    } else {
+      _circle();
+    }
 
     if (destroyed) {
       removeFromParent();
@@ -113,9 +132,10 @@ class PlayerComponent extends SpriteAnimationComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    // if (other is EnemyComponent) {
-    //   takeHit();
-    //   other.takeHit();
+
+    ///
+    // if (other is PlanetComponent) {
+    //   hitPlanet(other);
     // }
   }
 }
