@@ -46,7 +46,9 @@ class SpaceFoodGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    //load map
     mapComponent = await TiledComponent.load('testmap.tmx', Vector2.all(32));
+    //set bounds for the camera
     final cameraVisibleArea = Rectangle.fromRect(
       Rect.fromLTRB(
         camera.viewport.size.x / 2,
@@ -58,9 +60,12 @@ class SpaceFoodGame extends FlameGame
     camera.setBounds(cameraVisibleArea, considerViewport: false);
     player = PlayerComponent();
 
+    //center player relative to the camera;
     player.anchor = Anchor.center;
 
+    //obviously;
     camera.follow(player);
+
     await world.add(
       FlameMultiBlocProvider(
         providers: [
