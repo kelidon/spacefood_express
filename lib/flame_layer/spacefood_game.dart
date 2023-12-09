@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/experimental.dart';
@@ -46,16 +47,20 @@ class SpaceFoodGame extends FlameGame
   @override
   Future<void> onLoad() async {
     mapComponent = await TiledComponent.load('testmap.tmx', Vector2.all(32));
-    print(camera.viewport.size);
-    final cameraVisibleArea =
-        Rectangle.fromRect(Rect.fromLTRB(0, 0, 3200, 3200));
+    final cameraVisibleArea = Rectangle.fromRect(
+      Rect.fromLTRB(
+        camera.viewport.size.x / 2,
+        camera.viewport.size.y / 2,
+        3200 - camera.viewport.size.x / 2,
+        3200 - camera.viewport.size.y / 2,
+      ),
+    );
     camera.setBounds(cameraVisibleArea, considerViewport: false);
     player = PlayerComponent();
 
     player.anchor = Anchor.center;
 
     camera.follow(player);
-
     await world.add(
       FlameMultiBlocProvider(
         providers: [
@@ -73,6 +78,36 @@ class SpaceFoodGame extends FlameGame
       ),
     );
     await add(world);
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    if (camera.viewfinder.firstChild<BoundedPositionBehavior>() != null) {
+      final cameraVisibleArea = Rectangle.fromRect(
+        Rect.fromLTRB(
+          camera.viewport.size.x / 2,
+          camera.viewport.size.y / 2,
+          3200 - camera.viewport.size.x / 2,
+          3200 - camera.viewport.size.y / 2,
+        ),
+      );
+      camera.setBounds(cameraVisibleArea, considerViewport: false);
+    }
+  }
+
+  @override
+  void onParentResize(Vector2 maxSize) {
+    super.onParentResize(maxSize);
+    final cameraVisibleArea = Rectangle.fromRect(
+      Rect.fromLTRB(
+        camera.viewport.size.x / 2,
+        camera.viewport.size.y / 2,
+        3200 - camera.viewport.size.x / 2,
+        3200 - camera.viewport.size.y / 2,
+      ),
+    );
+    camera.setBounds(cameraVisibleArea, considerViewport: false);
   }
 
   @override
