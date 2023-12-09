@@ -8,6 +8,7 @@ import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
+import 'package:spacefood_express/actors/models/planet_type.dart';
 import 'package:spacefood_express/actors/planet.dart';
 
 import '../actors/player.dart';
@@ -48,24 +49,48 @@ class SpaceFoodGame extends FlameGame
   @override
   Future<void> onLoad() async {
     //debug camera
-    // camera.viewport = FixedResolutionViewport(resolution: Vector2(2000, 2000));
+    camera.viewport = FixedResolutionViewport(resolution: Vector2(2000, 2000));
 
     //load map
     mapComponent = await TiledComponent.load('testmap.tmx', Vector2.all(32));
 
     //set bounds for the camera
     final cameraVisibleArea = Rectangle.fromLTRB(
-        camera.viewport.size.x / 2,
-        camera.viewport.size.y / 2,
-        mapComponent!.size.x - camera.viewport.size.x / 2,
-        mapComponent!.size.y - camera.viewport.size.y / 2,
+      camera.viewport.size.x / 2,
+      camera.viewport.size.y / 2,
+      mapComponent!.size.x - camera.viewport.size.x / 2,
+      mapComponent!.size.y - camera.viewport.size.y / 2,
     );
     camera.setBounds(cameraVisibleArea, considerViewport: false);
 
+    List<PlanetComponent> allPlanets = [];
 
-    ///TODO:
+    final objectGroup = mapComponent!.tileMap.getLayer<ObjectGroup>('planets');
+    for (final object in objectGroup!.objects) {
+      PlanetType planetType;
+      Property? property = object.properties.byName['type'];
+      if (property != null) {
+        planetType = PlanetType.fromString(property.value);
+      } else {
+        planetType = PlanetType.normal;
+      }
+      allPlanets.add(
+        PlanetComponent(
+          object.height / 1.1,
+          object.x,
+          object.y,
+          -0.02,
+          object.height,
+          object.width,
+          planetType,
+        ),
+      );
+    }
+
     player = PlayerComponent(
-      PlanetComponent(20, 105, 505, -0.05, 100, 100),
+      allPlanets.firstWhere(
+        (e) => e.planetType == PlanetType.spawn,
+      ),
     );
 
     //center player relative to the camera;
@@ -90,14 +115,7 @@ class SpaceFoodGame extends FlameGame
         ],
       ),
     );
-
-    final objectGroup = mapComponent!.tileMap.getLayer<ObjectGroup>('planets');
-    for (final object in objectGroup!.objects) {
-      world.add(
-        PlanetComponent(object.height / 1.1, object.x, object.y, -0.05, object.height, object.width),
-      );
-    }
-
+    world.addAll(allPlanets);
     await add(world);
   }
 
@@ -157,7 +175,7 @@ class SpaceFoodGame extends FlameGame
 
   @override
   void onPanDown(DragDownInfo info) {
-    if(!player.isFlying) {
+    if (!player.isFlying) {
       player.liftoff();
     }
   }

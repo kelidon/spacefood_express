@@ -4,8 +4,8 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:spacefood_express/actors/models/planet_type.dart';
 import 'package:spacefood_express/actors/planet.dart';
-
 import 'package:spacefood_express/blocs/game_stats/game_stats_bloc.dart';
 import 'package:spacefood_express/blocs/inventory/inventory_bloc.dart';
 import 'package:spacefood_express/flame_layer/spacefood_game.dart';
@@ -26,7 +26,15 @@ class PlayerController extends Component
       game.statsBloc.add(const PlayerRespawned());
       parent?.add(
         game.player = PlayerComponent(
-          PlanetComponent(20, 105, 505, -0.05, 100, 100),
+          PlanetComponent(
+            20,
+            105,
+            505,
+            -0.05,
+            100,
+            100,
+            PlanetType.normal,
+          ),
         ),
       );
     }

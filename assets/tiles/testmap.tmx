@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="12">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="13">
  <editorsettings>
   <export target="testmap.tmx" format="tmx"/>
  </editorsettings>
@@ -112,6 +112,9 @@
  </layer>
  <objectgroup id="2" name="planets">
   <object id="1" x="595.93" y="474.806" width="353.682" height="353.682">
+   <properties>
+    <property name="type" value="spawn"/>
+   </properties>
    <ellipse/>
   </object>
   <object id="2" x="1700.58" y="600.775" width="334.302" height="334.302">
@@ -127,6 +130,9 @@
    <ellipse/>
   </object>
   <object id="7" x="1996.12" y="2655.04" width="271.318" height="271.318">
+   <properties>
+    <property name="type" value="finish"/>
+   </properties>
    <ellipse/>
   </object>
   <object id="8" x="1288.76" y="1269.38" width="179.264" height="179.264">

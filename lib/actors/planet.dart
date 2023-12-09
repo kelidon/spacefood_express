@@ -1,8 +1,8 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/flame.dart';
 
 import '../flame_layer/spacefood_game.dart';
+import 'models/planet_type.dart';
 
 class PlanetComponent extends SpriteAnimationComponent
     with HasGameReference<SpaceFoodGame>, CollisionCallbacks {
@@ -13,6 +13,7 @@ class PlanetComponent extends SpriteAnimationComponent
     this.dAngle,
     this.height,
     this.width,
+    this.planetType,
   ) : super(position: Vector2(xCenter, yCenter), size: Vector2.all(25)) {
     add(RectangleHitbox(collisionType: CollisionType.passive));
   }
@@ -25,6 +26,7 @@ class PlanetComponent extends SpriteAnimationComponent
   final double height;
   @override
   final double width;
+  final PlanetType planetType;
 
   @override
   Future<void> onLoad() async {
