@@ -76,7 +76,16 @@ class SpaceFoodGame extends FlameGame
 
   @override
   void onPanUpdate(DragUpdateInfo info) {
-    player.move(info.delta.global.x, info.delta.global.y);
+    //player.move(info.delta.global.x, info.delta.global.y);
+  }
+
+  @override
+  void onPanDown(DragDownInfo info) {
+    if (player.isFlying) {
+      player.hitPlanet();
+    } else {
+      player.liftoff();
+    }
   }
 
   void increaseScore() {
