@@ -37,8 +37,9 @@ class PlayerComponent extends SpriteAnimationComponent
   double dAngle = -0.05;
 
   //todo class
-  double xc = 105;
-  double yc = 512;
+  ///4real bro
+  double xc = 1600;
+  double yc = 1600;
   double r = 13;
 
   late double dY;

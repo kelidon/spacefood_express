@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,46 +15,47 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider<GameStatsBloc>(create: (_) => GameStatsBloc()),
-            BlocProvider<InventoryBloc>(create: (_) => InventoryBloc()),
-          ],
-          child: const GameView(),
-        ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () => showDialog<String>(
-                context: context,
-                builder: (BuildContext context) =>
-                    const WinLoseAlert(isWinning: false))),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<GameStatsBloc>(create: (_) => GameStatsBloc()),
+          BlocProvider<InventoryBloc>(create: (_) => InventoryBloc()),
+        ],
+        child: const Game(),
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context) =>
+                  const WinLoseAlert(isWinning: false))),
     );
   }
 }
-
-class GameView extends StatelessWidget {
-  const GameView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        //GameStat(),
-        Expanded(
-          child: Stack(
-            children: [
-              Positioned.fill(child: Game()),
-
-              //todo - extra info on game screen
-              Positioned(top: 50, right: 10, child: TemperatureInfo()),
-              Positioned(top: 150, right: 10, child: TimeLeftWidget()),
-              /// perfect ->  Stack(children: [FlameLayer(), FlutterLayer())
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
+//
+// class GameView extends StatelessWidget {
+//   const GameView({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Column(
+//       children: [
+//         //GameStat(),
+//         Expanded(
+//           child: Stack(
+//             children: [
+//               Positioned.fill(child: Game()),
+//
+//               //todo - extra info on game screen
+//               Positioned(top: 50, right: 10, child: TemperatureInfo()),
+//               Positioned(top: 150, right: 10, child: TimeLeftWidget()),
+//
+//               /// perfect ->  Stack(children: [FlameLayer(), FlutterLayer())
+//             ],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class Game extends StatelessWidget {
   const Game({super.key});
