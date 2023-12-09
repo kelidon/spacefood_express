@@ -11,5 +11,11 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
         state.copyWith(temperature: state.temperature + event.value),
       ),
     );
+
+    on<TimeChange>(
+          (event, emit) => emit(
+        state.copyWith(temperature: state.temperature + event.value),
+      ),
+    );
   }
 }

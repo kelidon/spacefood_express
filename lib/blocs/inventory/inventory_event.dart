@@ -12,3 +12,12 @@ class TemperatureChange extends InventoryEvent {
   @override
   List<Object?> get props => [value];
 }
+
+class TimeChange extends InventoryEvent {
+  final double value;
+
+  const TimeChange(this.value);
+
+  @override
+  List<Object?> get props => [value];
+}
