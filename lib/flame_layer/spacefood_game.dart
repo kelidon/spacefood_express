@@ -34,7 +34,7 @@ class GameStatsController extends Component
 class SpaceFoodGame extends FlameGame
     with PanDetector, HasCollisionDetection, HasKeyboardHandlerComponents {
   late PlayerComponent player;
-  late TiledComponent mapComponent;
+  TiledComponent? mapComponent;
 
   final GameStatsBloc statsBloc;
   final InventoryBloc inventoryBloc;
@@ -48,13 +48,14 @@ class SpaceFoodGame extends FlameGame
   Future<void> onLoad() async {
     //load map
     mapComponent = await TiledComponent.load('testmap.tmx', Vector2.all(32));
+
     //set bounds for the camera
     final cameraVisibleArea = Rectangle.fromRect(
       Rect.fromLTRB(
         camera.viewport.size.x / 2,
         camera.viewport.size.y / 2,
-        3200 - camera.viewport.size.x / 2,
-        3200 - camera.viewport.size.y / 2,
+        mapComponent!.size.x - camera.viewport.size.x / 2,
+        mapComponent!.size.y - camera.viewport.size.y / 2,
       ),
     );
     camera.setBounds(cameraVisibleArea, considerViewport: false);
@@ -77,7 +78,7 @@ class SpaceFoodGame extends FlameGame
           ),
         ],
         children: [
-          mapComponent,
+          mapComponent!,
           player,
         ],
       ),
@@ -88,40 +89,32 @@ class SpaceFoodGame extends FlameGame
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    if (camera.viewfinder.firstChild<BoundedPositionBehavior>() != null) {
-      final cameraVisibleArea = Rectangle.fromRect(
-        Rect.fromLTRB(
-          camera.viewport.size.x / 2,
-          camera.viewport.size.y / 2,
-          3200 - camera.viewport.size.x / 2,
-          3200 - camera.viewport.size.y / 2,
-        ),
-      );
-      camera.setBounds(cameraVisibleArea, considerViewport: false);
+    //set bounds if resized
+    if (mapComponent != null) {
+      if (camera.viewfinder.firstChild<BoundedPositionBehavior>() != null) {
+        final cameraVisibleArea = Rectangle.fromRect(
+          Rect.fromLTRB(
+            camera.viewport.size.x / 2,
+            camera.viewport.size.y / 2,
+            mapComponent!.size.x - camera.viewport.size.x / 2,
+            mapComponent!.size.y - camera.viewport.size.y / 2,
+          ),
+        );
+        camera.setBounds(cameraVisibleArea, considerViewport: false);
+      }
     }
-  }
-
-  @override
-  void onParentResize(Vector2 maxSize) {
-    super.onParentResize(maxSize);
-    final cameraVisibleArea = Rectangle.fromRect(
-      Rect.fromLTRB(
-        camera.viewport.size.x / 2,
-        camera.viewport.size.y / 2,
-        3200 - camera.viewport.size.x / 2,
-        3200 - camera.viewport.size.y / 2,
-      ),
-    );
-    camera.setBounds(cameraVisibleArea, considerViewport: false);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    player.position = Vector2(
-      player.position.x.clamp(0, mapComponent.size.x),
-      player.position.y.clamp(0, mapComponent.size.y),
-    );
+    //stop player when reach bounds
+    if (mapComponent != null) {
+      player.position = Vector2(
+        player.position.x.clamp(0, mapComponent!.size.x),
+        player.position.y.clamp(0, mapComponent!.size.y),
+      );
+    }
   }
 
   @override
