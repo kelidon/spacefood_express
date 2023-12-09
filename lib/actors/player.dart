@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -30,11 +32,19 @@ class PlayerComponent extends SpriteAnimationComponent
         KeyboardHandler,
         FlameBlocListenable<InventoryBloc, InventoryState> {
   bool destroyed = false;
-  double speed = 10.0;
+  bool isFlying = false;
 
+  double dAngle = -0.05;
+
+  //todo class
+  double xc = 105;
+  double yc = 512;
+  double r = 13;
+
+  late double dY;
+  late double dX;
 
   PlayerComponent() : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
-
     add(RectangleHitbox());
   }
 
@@ -63,20 +73,48 @@ class PlayerComponent extends SpriteAnimationComponent
     y += deltaY;
   }
 
+  void _circle() {
+    double t = atan2(y - yc, x - xc);
+
+    x = xc + r * cos(t + dAngle);
+    y = yc + r * sin(t + dAngle);
+  }
+
+  void liftoff() {
+    isFlying = true;
+
+    double t = atan2(y - yc, x - xc);
+    dX = -x + xc + r * cos(t + dAngle);
+    dY = -y + yc + r * sin(t + dAngle);
+  }
+
+  void _flyAway() {
+    x += dX;
+    y += dY;
+  }
+
+  ///
+  void hitPlanet() {
+    isFlying = false;
+    xc = x + 21;
+    yc = y - 20;
+    r = 29;
+  }
+
   @override
   void update(double dt) {
     super.update(dt);
+
+    if (isFlying) {
+      _flyAway();
+    } else {
+      _circle();
+    }
 
     if (destroyed) {
       removeFromParent();
     }
   }
-
-  // void takeHit() {
-  //   game.add(ExplosionComponent(x, y));
-  //   removeFromParent();
-  //   game.statsBloc.add(const PlayerDied());
-  // }
 
   @override
   bool onKeyEvent(
@@ -94,9 +132,10 @@ class PlayerComponent extends SpriteAnimationComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    // if (other is EnemyComponent) {
-    //   takeHit();
-    //   other.takeHit();
+
+    ///
+    // if (other is PlanetComponent) {
+    //   hitPlanet(other);
     // }
   }
 }
