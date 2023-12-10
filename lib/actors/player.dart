@@ -69,7 +69,7 @@ class PlayerComponent extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         stepTime: 0.2,
         amount: 4,
-        textureSize: Vector2(32, 48),
+        textureSize: Vector2(104, 104),
       ),
     );
   }
