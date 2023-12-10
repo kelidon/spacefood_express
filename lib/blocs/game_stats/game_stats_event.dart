@@ -27,6 +27,13 @@ class PlayerRespawned extends GameStatsEvent {
   List<Object?> get props => [];
 }
 
+class NextLevel extends GameStatsEvent {
+  const NextLevel();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class GameReset extends GameStatsEvent {
   const GameReset();
 
