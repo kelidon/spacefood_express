@@ -13,7 +13,7 @@ class TemperatureInfo extends StatelessWidget {
       var tempDiff = tempHigherBound - tempLowerBound;
       var part = (state.temperature - tempLowerBound) / tempDiff;
       var height = MediaQuery.of(context).size.height / 2;
-      var tempHeight = (height-2) * part;
+      var tempHeight = ((height-2) * part).abs();
 
       return Stack(
         alignment: Alignment.bottomCenter,
@@ -35,9 +35,9 @@ class TemperatureInfo extends StatelessWidget {
             height: tempHeight,
             alignment: Alignment.bottomCenter,
             constraints: BoxConstraints.loose(Size(23, tempHeight)),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.red,
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             duration: const Duration(milliseconds: 400),
           ),

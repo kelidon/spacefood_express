@@ -8,12 +8,18 @@
     ],
     "file.lastUsedOpenFilter": "Все файлы (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "#background": {
+            "scaleInDock": 1
+        },
         "testmap.tmx": {
-            "scale": 0.1928,
-            "selectedLayer": 0,
+            "scale": 0.1779,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1587.136929460581,
-                "y": 1654.5643153526973
+                "x": 1613.265879707701,
+                "y": 1691.9617762788084
             }
         },
         "testmap.tmx#background": {
@@ -32,5 +38,9 @@
     "recentFiles": [
         "testmap.tmx"
     ],
-    "tileset.embedInMap": true
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
 }

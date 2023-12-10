@@ -27,9 +27,11 @@ class LevelsScene extends PositionComponent
   void onNewState(GameStatsState state) {
     for (int i = 1; i < levels.length; i++) {
       if (state.level == i + 1) {
-        remove(levels[i]);
-        add(levels[i + 1]);
-        currentLevel = levels[i + 1];
+        if(levels[i].parent != null) {
+          remove(levels[i]);
+          add(levels[i + 1]);
+          currentLevel = levels[i + 1];
+        }
       }
     }
     super.onNewState(state);

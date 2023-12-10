@@ -9,6 +9,7 @@ import 'package:spacefood_express/actors/planet.dart';
 import 'package:spacefood_express/blocs/game_stats/game_stats_bloc.dart';
 import 'package:spacefood_express/blocs/inventory/inventory_bloc.dart';
 import 'package:spacefood_express/flame_layer/spacefood_game.dart';
+import 'package:spacefood_express/utils/audio_manager.dart';
 
 const double temperatureSpeed = 0.1;
 const double tempLowerBound = 0;
@@ -80,8 +81,10 @@ class PlayerComponent extends SpriteAnimationComponent
     this.state = state;
     if (state.temperature < tempLowerBound) {
       game.resetLevel(const LevelLoose(isFreeze: true));
+      // AudioManager.playSpecialEffects(Sounds.dead);
     } else if (state.temperature > tempHigherBound) {
       game.resetLevel(const LevelLoose(isFreeze: false));
+      // AudioManager.playSpecialEffects(Sounds.dead);
     }
   }
 
@@ -103,7 +106,6 @@ class PlayerComponent extends SpriteAnimationComponent
 
   void liftoff() {
     isFlying = true;
-
     double t = atan2(y - planet.yCenter, x - planet.xCenter);
     dX = -x + planet.xCenter + planet.radius * cos(t + planet.dAngle);
     dY = -y + planet.yCenter + planet.radius * sin(t + planet.dAngle);
@@ -120,7 +122,7 @@ class PlayerComponent extends SpriteAnimationComponent
   void hitPlanet(PlanetComponent planetComponent,) {
     isFlying = false;
     planet = planetComponent;
-
+    AudioManager.playSpecialEffects(Sounds.attraction);
     if (planetComponent.planetType == PlanetType.finish) {
       if (game.statsBloc.state.level == game.levelScene.levels.length - 1) {
         game.resetLevel(const GameWin());
