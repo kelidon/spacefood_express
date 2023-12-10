@@ -10,7 +10,7 @@ class TemperatureInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<InventoryBloc, InventoryState>(builder: (context, state) {
       return AnimatedContainer(
-        height: 50,
+        height: MediaQuery.of(context).size.height/2,
         padding: const EdgeInsets.all(10),
         color: Colors.orange,
         duration: const Duration(milliseconds: 400),

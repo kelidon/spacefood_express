@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spacefood_express/flutter_layer/level_info_widget.dart';
 import 'package:spacefood_express/flutter_layer/temperature_info_widget.dart';
 import 'package:spacefood_express/flutter_layer/time_left_widget.dart';
 import 'package:spacefood_express/flutter_layer/win_lose_alert.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
-import 'compass_widget.dart';
 import '../utils/audio_manager.dart';
+import 'compass_widget.dart';
 import 'level_start_alert.dart';
 
 class FlutterLayer extends StatelessWidget {
@@ -20,7 +19,7 @@ class FlutterLayer extends StatelessWidget {
       Future.delayed(
         Duration.zero,
         () => showDialog<String>(
-          barrierColor: Colors.transparent,
+            barrierColor: Colors.transparent,
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) => alertWidget),
@@ -78,13 +77,27 @@ class FlutterLayer extends StatelessWidget {
               statsBloc.add(const GameReset());
             }));
     }
-    return const Stack(
-      children: [
-        Positioned(top: 50, right: 10, child: TemperatureInfo()),
-        Positioned(top: 150, right: 10, child: TimeLeftWidget()),
-        Positioned(top: 50, right: 100, child: LevelInfo()),
-        Positioned(top: 50, left: 30, child: CompassWidget()),
-      ],
+    return const Padding(
+      padding: EdgeInsets.all(36),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TimeLeftWidget(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('pause'),
+              Spacer(),
+              CompassWidget(),
+              SizedBox(
+                height: 15,
+              ),
+              TemperatureInfo(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
