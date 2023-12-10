@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/compass/compass_cubit.dart';
 import 'blocs/game_stats/game_stats_bloc.dart';
 import 'blocs/inventory/inventory_bloc.dart';
 import 'flame_layer/spacefood_game.dart';
@@ -17,6 +18,7 @@ class GamePage extends StatelessWidget {
         providers: [
           BlocProvider<GameStatsBloc>(create: (_) => GameStatsBloc()),
           BlocProvider<InventoryBloc>(create: (_) => InventoryBloc()),
+          BlocProvider<CompassCubit>(create: (_) => CompassCubit())
         ],
         child: const GameView(),
       ),
@@ -47,6 +49,7 @@ class Game extends StatelessWidget {
       game: SpaceFoodGame(
         statsBloc: context.read<GameStatsBloc>(),
         inventoryBloc: context.read<InventoryBloc>(),
+        compassCubit: context.read<CompassCubit>(),
       ),
     );
   }

@@ -117,14 +117,12 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   ///
-  void hitPlanet(
-    PlanetComponent planetComponent,
-  ) {
+  void hitPlanet(PlanetComponent planetComponent,) {
     isFlying = false;
     planet = planetComponent;
 
     if (planetComponent.planetType == PlanetType.finish) {
-      if(game.statsBloc.state.level == game.levelScene.levels.length-1) {
+      if (game.statsBloc.state.level == game.levelScene.levels.length - 1) {
         game.resetLevel(const GameWin());
       } else {
         game.resetLevel(const LevelWin());
@@ -132,11 +130,17 @@ class PlayerComponent extends SpriteAnimationComponent
     }
   }
 
+  double compassAngle() {
+    var finishPlanet = game.levelScene.currentLevel.finishPlanet;
+    return atan2((finishPlanet.yCenter - y), (finishPlanet.xCenter - x)) - pi/2;
+  }
+
   @override
   void update(double dt) {
     super.update(dt);
 
     if (game.statsBloc.state.status == GameStatus.respawned) {
+      game.compassCubit.changeAngle(compassAngle());
       if (isFlying) {
         _flyAway();
       } else {
@@ -150,10 +154,8 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   @override
-  bool onKeyEvent(
-    RawKeyEvent event,
-    Set<LogicalKeyboardKey> keysPressed,
-  ) {
+  bool onKeyEvent(RawKeyEvent event,
+      Set<LogicalKeyboardKey> keysPressed,) {
     if (keysPressed.contains(LogicalKeyboardKey.tab)) {
       //todo
 

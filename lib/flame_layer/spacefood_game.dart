@@ -10,6 +10,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:spacefood_express/flame_layer/levels_scene.dart';
 
+import '../blocs/compass/compass_cubit.dart';
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
 import '../utils/audio_manager.dart';
@@ -36,10 +37,12 @@ class SpaceFoodGame extends FlameGame
 
   final GameStatsBloc statsBloc;
   final InventoryBloc inventoryBloc;
+  final CompassCubit compassCubit;
 
   SpaceFoodGame({
     required this.inventoryBloc,
     required this.statsBloc,
+    required this.compassCubit,
   });
 
   late LevelsScene levelScene;
@@ -72,6 +75,9 @@ class SpaceFoodGame extends FlameGame
           ),
           FlameBlocProvider<InventoryBloc, InventoryState>.value(
             value: inventoryBloc,
+          ),
+          FlameBlocProvider<CompassCubit, CompassState>.value(
+            value: compassCubit,
           ),
         ],
         children: [mapComponent!, levelScene],

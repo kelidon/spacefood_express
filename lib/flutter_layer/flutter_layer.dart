@@ -7,6 +7,7 @@ import 'package:spacefood_express/flutter_layer/win_lose_alert.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
+import 'compass_widget.dart';
 import '../utils/audio_manager.dart';
 import 'level_start_alert.dart';
 
@@ -19,6 +20,7 @@ class FlutterLayer extends StatelessWidget {
       Future.delayed(
         Duration.zero,
         () => showDialog<String>(
+          barrierColor: Colors.transparent,
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) => alertWidget),
@@ -40,6 +42,7 @@ class FlutterLayer extends StatelessWidget {
               AudioManager.stopBackgroundMusic();
               AudioManager.clearAudioCache('example.mp3');
             });
+            context.read<InventoryBloc>().add(const ResetInventory());
             statsBloc.add(const PlayerRespawned());
           },
         ));
@@ -80,6 +83,7 @@ class FlutterLayer extends StatelessWidget {
         Positioned(top: 50, right: 10, child: TemperatureInfo()),
         Positioned(top: 150, right: 10, child: TimeLeftWidget()),
         Positioned(top: 50, right: 100, child: LevelInfo()),
+        Positioned(top: 50, left: 30, child: CompassWidget()),
       ],
     );
   }

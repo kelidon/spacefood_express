@@ -12,6 +12,8 @@ class Level extends PositionComponent
     with HasGameRef<SpaceFoodGame>, FlameBlocListenable<GameStatsBloc, GameStatsState> {
   late PlayerComponent player;
   List<PlanetComponent> allPlanets = [];
+  late PlanetComponent finishPlanet;
+  late PlanetComponent spawnPlanet;
 
   void loadComponents() {
     final objectGroup = game.mapComponent!.tileMap.getLayer<ObjectGroup>('planets');
@@ -23,22 +25,28 @@ class Level extends PositionComponent
       } else {
         planetType = PlanetType.normal;
       }
-      allPlanets.add(
-        PlanetComponent(
-          object.height / 1.1,
-          object.x,
-          object.y,
-          -0.02,
-          object.height,
-          object.width,
-          planetType,
-        ),
+
+      var planet = PlanetComponent(
+        object.height / 1.1,
+        object.x,
+        object.y,
+        -0.02,
+        object.height,
+        object.width,
+        planetType,
       );
+
+      allPlanets.add(planet);
+
+      if (planetType == PlanetType.finish) {
+        finishPlanet = planet;
+      }
+      if (planetType == PlanetType.spawn) {
+        spawnPlanet = planet;
+      }
     }
 
-    player = PlayerComponent(allPlanets.firstWhere(
-      (e) => e.planetType == PlanetType.spawn,
-    ));
+    player = PlayerComponent(spawnPlanet);
 
     //center player relative to the camera;
     player.anchor = Anchor.center;
@@ -51,9 +59,7 @@ class Level extends PositionComponent
   }
 
   void resetPlayer() {
-    player.planet = allPlanets.firstWhere(
-      (e) => e.planetType == PlanetType.spawn,
-    );
+    player.planet = spawnPlanet;
     player.isFlying = false;
   }
 
