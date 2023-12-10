@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +36,11 @@ class PlanetComponent extends SpriteAnimationComponent
     debugColor = Colors.red;
     await super.onLoad();
     animation = await game.loadSpriteAnimation(
-      'reign.png',
+      '${Random().nextInt(4) + 1}.png',
       SpriteAnimationData.sequenced(
         stepTime: 0.2,
         amount: 4,
-        textureSize: Vector2(512.25, 417),
+        textureSize: Vector2(320, 320),
       ),
     );
     size = Vector2(height, width);
