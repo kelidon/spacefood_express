@@ -14,7 +14,7 @@ class LevelStartAlert extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(0.6),
       title: Align(
           alignment: Alignment.bottomCenter,
-          child: Text('New order: $foodName', style: TextStyle(color: Colors.white))),
+          child: Text('New order: $foodName', style: TextStyle(color: Colors.black))),
       content: Image.asset(
         'assets/images/food/$image.png',
         height: 150,
@@ -28,7 +28,7 @@ class LevelStartAlert extends StatelessWidget {
           },
           child: const Text(
             'Start',
-            style: TextStyle(color: Colors.redAccent),
+            style: TextStyle(color: Colors.purple, fontWeight: FontWeight.w800, fontSize: 20),
           ),
         ),
       ],

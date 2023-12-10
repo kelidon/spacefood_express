@@ -31,7 +31,7 @@ class WinLoseAlert extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(0.6),
       title: Text(
         passedLevel(isWinning) ?? '',
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.black, fontSize: 22),
       ),
       content: Column(
         children: [
@@ -50,7 +50,7 @@ class WinLoseAlert extends StatelessWidget {
           },
           child: Text(
             isWinning ? 'Next' : 'Replay',
-            style: TextStyle(color: Colors.redAccent),
+            style: TextStyle(color: Colors.purple, fontWeight: FontWeight.w800, fontSize: 20),
           ),
         ),
       ],
