@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacefood_express/flutter_layer/temperature_info_widget.dart';
-import 'package:spacefood_express/flutter_layer/time_left_widget.dart';
 import 'package:spacefood_express/flutter_layer/win_lose_alert.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
@@ -10,24 +9,35 @@ import '../utils/audio_manager.dart';
 import 'compass_widget.dart';
 import 'level_start_alert.dart';
 
-class FlutterLayer extends StatelessWidget {
+class FlutterLayer extends StatefulWidget {
   const FlutterLayer({super.key});
 
   @override
+  State<FlutterLayer> createState() => _FlutterLayerState();
+}
+
+class _FlutterLayerState extends State<FlutterLayer> {
+
+  @override
+  Future<void> didChangeDependencies() async {
+    super.didChangeDependencies();
+    await AudioManager.init();
+  }
+
+  void showAlert(Widget alertWidget) {
+    Future.delayed(
+      Duration.zero,
+      () => showDialog<String>(
+          barrierColor: Colors.transparent,
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => alertWidget),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    void showAlert(Widget alertWidget) {
-      Future.delayed(
-        Duration.zero,
-        () => showDialog<String>(
-            barrierColor: Colors.transparent,
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) => alertWidget),
-      );
-    }
-
     final statsBloc = context.watch<GameStatsBloc>();
-
     switch (statsBloc.state.status) {
       case GameStatus.respawned:
         break;
@@ -36,11 +46,6 @@ class FlutterLayer extends StatelessWidget {
           foodName: 'Pasta',
           image: 'background',
           onStart: () {
-            AudioManager.playBackgroundMusic('example.mp3');
-            Future.delayed(const Duration(seconds: 5), () {
-              AudioManager.stopBackgroundMusic();
-              AudioManager.clearAudioCache('example.mp3');
-            });
             context.read<InventoryBloc>().add(const ResetInventory());
             statsBloc.add(const PlayerRespawned());
           },
@@ -78,16 +83,17 @@ class FlutterLayer extends StatelessWidget {
             }));
     }
     return const Padding(
-      padding: EdgeInsets.all(36),
+      padding: EdgeInsets.all(32),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TimeLeftWidget(),
+          //TimeLeftWidget(),
+          SizedBox.shrink(),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('pause'),
+              //Text('pause'),
               Spacer(),
               CompassWidget(),
               SizedBox(

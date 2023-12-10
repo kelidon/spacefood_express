@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spacefood_express/utils/audio_manager.dart';
 
 part 'game_stats_event.dart';
 
@@ -14,24 +15,28 @@ class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
       ),
     );
 
-    on<LevelWin>(
-      (event, emit) => emit(
-        //if last - win
+    on<LevelWin>((event, emit) {
+      AudioManager.playSpecialEffects(Sounds.finish);
+      emit(
         state.copyWith(status: GameStatus.levelWin),
-      ),
-    );
-    on<LevelLoose>(
-      (event, emit) => emit(
+      );
+    });
+    on<LevelLoose>((event, emit) {
+      AudioManager.playSpecialEffects(Sounds.dead);
+      emit(
         state.copyWith(
-            status: event.isFreeze ? GameStatus.levelLooseFreeze : GameStatus.levelLooseBurn),
-      ),
-    );
+            status: event.isFreeze
+                ? GameStatus.levelLooseFreeze
+                : GameStatus.levelLooseBurn),
+      );
+    });
 
-    on<PlayerRespawned>(
-      (event, emit) => emit(
+    on<PlayerRespawned>((event, emit) {
+      AudioManager.playSpecialEffects(Sounds.start);
+      emit(
         state.copyWith(status: GameStatus.respawned),
-      ),
-    );
+      );
+    });
 
     on<GameWin>(
       (event, emit) => emit(

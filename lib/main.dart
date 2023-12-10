@@ -1,6 +1,5 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
-import 'package:spacefood_express/utils/audio_manager.dart';
 
 import 'game.dart';
 
@@ -8,7 +7,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.fullScreen();
   Flame.device.setLandscape();
-  await AudioManager.init();
 
   runApp(const MyApp());
 }
