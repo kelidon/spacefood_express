@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spacefood_express/flutter_layer/level_info_widget.dart';
 import 'package:spacefood_express/flutter_layer/temperature_info_widget.dart';
 import 'package:spacefood_express/flutter_layer/time_left_widget.dart';
 
@@ -39,8 +40,9 @@ class _FlutterLayerState extends State<FlutterLayer> {
             child: Stack(
               children: [
                 //todo - extra info on game screen
-                // Positioned(top: 50, right: 10, child: TemperatureInfo()),
-                // Positioned(top: 150, right: 10, child: TimeLeftWidget()),
+                Positioned(top: 50, right: 10, child: TemperatureInfo()),
+                Positioned(top: 150, right: 10, child: TimeLeftWidget()),
+                Positioned(top: 50, right: 100, child: LevelInfo()),
 
                 /// perfect ->  Stack(children: [FlameLayer(), FlutterLayer())
               ],
