@@ -12,6 +12,7 @@ import 'package:spacefood_express/flame_layer/levels_scene.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
+import '../utils/audio_manager.dart';
 
 class GameStatsController extends Component with HasGameReference<SpaceFoodGame> {
   @override
@@ -46,7 +47,7 @@ class SpaceFoodGame extends FlameGame
   @override
   Future<void> onLoad() async {
     //debug camera
-    camera.viewport = FixedResolutionViewport(resolution: Vector2(2000, 2000));
+    //camera.viewport = FixedResolutionViewport(resolution: Vector2(2000, 2000));
 
     //load map
     const double zoom = 1;
@@ -77,6 +78,7 @@ class SpaceFoodGame extends FlameGame
         children: [mapComponent!, levelScene],
       ),
     );
+    await AudioManager.init();
     await add(world);
   }
 

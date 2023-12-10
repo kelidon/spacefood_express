@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spacefood_express/utils/audio_manager.dart';
 
 import 'blocs/game_stats/game_stats_bloc.dart';
 import 'blocs/inventory/inventory_bloc.dart';
@@ -24,10 +25,13 @@ class GamePage extends StatelessWidget {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-              onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => const WinLoseAlert(isWinning: true))),
+          FloatingActionButton(onPressed: () {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) =>
+                    const WinLoseAlert(isWinning: true));
+            AudioManager.playSpecialEffects('pick.wav');
+          }),
         ],
       ),
     );
