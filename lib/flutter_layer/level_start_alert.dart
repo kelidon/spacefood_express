@@ -10,10 +10,10 @@ class LevelStartAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.white.withOpacity(0.2),
+      backgroundColor: Colors.white.withOpacity(0.4),
       title: Align(alignment: Alignment.bottomCenter, child: Text('Твоя цель: $foodName')),
       content: Image.asset(
-        'assets/images/$image.png',
+        'assets/images/food/$image.png',
         height: 200,
         width: 200,
       ),
