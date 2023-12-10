@@ -52,6 +52,8 @@ class SpaceFoodGame extends FlameGame
     camera.viewport = FixedResolutionViewport(resolution: Vector2(2000, 2000));
 
     //load map
+    const double zoom = 1;
+    camera.viewfinder.zoom = zoom;
     mapComponent = await TiledComponent.load('testmap.tmx', Vector2.all(32));
 
     //set bounds for the camera

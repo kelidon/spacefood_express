@@ -97,6 +97,8 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _circle() {
+
+    //add +1с
     double t = atan2(y - yc, x - xc);
 
     x = xc + r * cos(t + dAngle);
@@ -112,6 +114,8 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _flyAway() {
+    //add -1с
+
     x += dX;
     y += dY;
   }
