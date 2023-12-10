@@ -29,8 +29,8 @@ class WinLoseAlert extends StatelessWidget {
         children: [
           Image.asset(
             'assets/images/food/$image.png',
-            height: 180,
-            width: 180,
+            height: 150,
+            width: 150,
           ),
         ],
       ),

@@ -36,7 +36,7 @@ class PlanetComponent extends SpriteAnimationComponent
     debugColor = Colors.red;
     await super.onLoad();
     animation = await game.loadSpriteAnimation(
-      '${Random().nextInt(4) + 1}.png',
+      '${Random().nextInt(5) + 1}.png',
       SpriteAnimationData.sequenced(
         stepTime: 0.2,
         amount: 4,
