@@ -35,16 +35,26 @@ class _FlutterLayerState extends State<FlutterLayer> {
     );
   }
 
+  final foods = ["pizza","pasta","burger"];
+
   @override
   Widget build(BuildContext context) {
     final statsBloc = context.watch<GameStatsBloc>();
     switch (statsBloc.state.status) {
       case GameStatus.respawned:
         break;
+        // showAlert(LevelStartAlert(
+        //   foodName:  foods[statsBloc.state.level].toUpperCase(),
+        //   image: foods[statsBloc.state.level],
+        //   onStart: () {
+        //     context.read<InventoryBloc>().add(const ResetInventory());
+        //     statsBloc.add(const PlayerRespawned());
+        //   },
+        // ));
       case GameStatus.initial:
         showAlert(LevelStartAlert(
-          foodName: 'Pasta',
-          image: 'background',
+          foodName:  foods[0].toUpperCase(),
+          image: foods[0],
           onStart: () {
             context.read<InventoryBloc>().add(const ResetInventory());
             statsBloc.add(const PlayerRespawned());
@@ -54,6 +64,7 @@ class _FlutterLayerState extends State<FlutterLayer> {
         showAlert(WinLoseAlert(
             isWinning: false,
             isFreeze: true,
+            image: foods[statsBloc.state.level],
             onContinue: () {
               context.read<InventoryBloc>().add(const ResetInventory());
               statsBloc.add(const PlayerRespawned());
@@ -62,6 +73,7 @@ class _FlutterLayerState extends State<FlutterLayer> {
         showAlert(WinLoseAlert(
             isWinning: false,
             isFreeze: false,
+            image: foods[statsBloc.state.level],
             onContinue: () {
               context.read<InventoryBloc>().add(const ResetInventory());
               statsBloc.add(const PlayerRespawned());
@@ -69,6 +81,7 @@ class _FlutterLayerState extends State<FlutterLayer> {
       case GameStatus.levelWin:
         showAlert(WinLoseAlert(
             isWinning: true,
+            image: foods[statsBloc.state.level],
             onContinue: () {
               context.read<InventoryBloc>().add(const ResetInventory());
               statsBloc.add(const NextLevel());
@@ -77,6 +90,7 @@ class _FlutterLayerState extends State<FlutterLayer> {
         //diff
         showAlert(WinLoseAlert(
             isWinning: true,
+            image: foods[statsBloc.state.level],
             onContinue: () {
               context.read<InventoryBloc>().add(const ResetInventory());
               statsBloc.add(const GameReset());

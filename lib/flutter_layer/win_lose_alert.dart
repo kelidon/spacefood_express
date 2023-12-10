@@ -7,9 +7,10 @@ import '../utils/strings.dart';
 class WinLoseAlert extends StatelessWidget {
   final bool isWinning;
   final bool? isFreeze;
+  final String image;
   final Function () onContinue;
 
-  const WinLoseAlert({super.key, required this.isWinning, required this.onContinue, this.isFreeze});
+  const WinLoseAlert({super.key, required this.isWinning, required this.onContinue, this.isFreeze, required this.image});
 
   String? passedLevel(bool win) {
     if (win) {
@@ -22,7 +23,17 @@ class WinLoseAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(passedLevel(isWinning)?? ''),
+      backgroundColor: Colors.white.withOpacity(0.4),
+      title: Text(passedLevel(isWinning) ?? ''),
+      content: Column(
+        children: [
+          Image.asset(
+            'assets/images/food/$image.png',
+            height: 180,
+            width: 180,
+          ),
+        ],
+      ),
       actions: <Widget>[
         TextButton(
           onPressed: () {
