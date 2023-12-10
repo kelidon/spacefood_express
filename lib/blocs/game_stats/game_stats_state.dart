@@ -5,38 +5,40 @@ enum GameStatus {
   respawn,
   respawned,
   gameOver,
+  levelLoose,
+  levelWin,
 }
 
 class GameStatsState extends Equatable {
   final int score;
-  final int lives;
+  final int level;
   final GameStatus status;
 
   const GameStatsState({
     required this.score,
-    required this.lives,
+    required this.level,
     required this.status,
   });
 
   const GameStatsState.empty()
       : this(
           score: 0,
-          lives: 3,
+          level: 0,
           status: GameStatus.initial,
         );
 
   GameStatsState copyWith({
     int? score,
-    int? lives,
+    int? level,
     GameStatus? status,
   }) {
     return GameStatsState(
       score: score ?? this.score,
-      lives: lives ?? this.lives,
+      level: level ?? this.level,
       status: status ?? this.status,
     );
   }
 
   @override
-  List<Object?> get props => [score, lives, status];
+  List<Object?> get props => [score, level, status];
 }
