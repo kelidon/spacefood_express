@@ -14,9 +14,8 @@ class PlanetComponent extends SpriteAnimationComponent
     this.dAngle,
     this.height,
     this.width,
-    planetType,//todo this.planet
-  )   : planetType = planetType == PlanetType.spawn ? PlanetType.spawn : PlanetType.finish,
-        super(position: Vector2(xCenter, yCenter), size: Vector2.all(25)) {
+    this.planetType,
+  ) : super(position: Vector2(xCenter, yCenter), size: Vector2.all(25)) {
     add(RectangleHitbox(collisionType: CollisionType.passive));
   }
 
