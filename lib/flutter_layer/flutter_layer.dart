@@ -16,92 +16,66 @@ class FlutterLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     void showAlert(Widget alertWidget) {
       Future.delayed(
-          Duration.zero,
-          () =>
-              showDialog<String>(context: context, builder: (BuildContext context) => alertWidget));
+        Duration.zero,
+        () => showDialog<String>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => alertWidget),
+      );
     }
 
     final statsBloc = context.watch<GameStatsBloc>();
-    final inventoryBloc = context.watch<InventoryBloc>();
 
     switch (statsBloc.state.status) {
+      case GameStatus.respawned:
+        break;
       case GameStatus.initial:
         showAlert(LevelStartAlert(
           foodName: 'Pasta',
           image: 'background',
-          onStart: () => statsBloc.add(const PlayerRespawned()),
+          onStart: () {
+            context.read<InventoryBloc>().add(const ResetInventory());
+            statsBloc.add(const PlayerRespawned());
+          },
         ));
-      case GameStatus.respawned:
-        inventoryBloc.add(const ResetInventory());
       case GameStatus.levelLooseFreeze:
         showAlert(WinLoseAlert(
-          isWinning: false,
-          isFreeze: true,
-          onContinue: () => statsBloc.add(const PlayerRespawned()),
-        ));
+            isWinning: false,
+            isFreeze: true,
+            onContinue: () {
+              context.read<InventoryBloc>().add(const ResetInventory());
+              statsBloc.add(const PlayerRespawned());
+            }));
       case GameStatus.levelLooseBurn:
         showAlert(WinLoseAlert(
-          isWinning: false,
-          isFreeze: false,
-          onContinue: () => statsBloc.add(const PlayerRespawned()),
-        ));
+            isWinning: false,
+            isFreeze: false,
+            onContinue: () {
+              context.read<InventoryBloc>().add(const ResetInventory());
+              statsBloc.add(const PlayerRespawned());
+            }));
       case GameStatus.levelWin:
         showAlert(WinLoseAlert(
-          isWinning: true,
-          onContinue: () => statsBloc.add(const NextLevel()),
-        ));
+            isWinning: true,
+            onContinue: () {
+              context.read<InventoryBloc>().add(const ResetInventory());
+              statsBloc.add(const NextLevel());
+            }));
       case GameStatus.gameWin:
         //diff
         showAlert(WinLoseAlert(
-          isWinning: true,
-          onContinue: () => statsBloc.add(const GameReset()),
-        ));
+            isWinning: true,
+            onContinue: () {
+              context.read<InventoryBloc>().add(const ResetInventory());
+              statsBloc.add(const GameReset());
+            }));
     }
     return const Stack(
       children: [
-        //todo - extra info on game screen
         Positioned(top: 50, right: 10, child: TemperatureInfo()),
         Positioned(top: 150, right: 10, child: TimeLeftWidget()),
         Positioned(top: 50, right: 100, child: LevelInfo()),
       ],
     );
-    //   BlocBuilder<GameStatsBloc, GameStatsState>(builder: (context, state) {
-    //   if (state.status == GameStatus.initial) {
-    //     Future.delayed(
-    //         Duration.zero,
-    //         () => showDialog<String>(
-    //             context: context,
-    //             builder: (BuildContext context) => const LevelStartAlert(
-    //                   foodName: 'Pasta',
-    //                   image: 'background',
-    //                 )));
-    //   }
-    //   return const Stack(
-    //     children: [
-    //       //todo - extra info on game screen
-    //       Positioned(top: 50, right: 10, child: TemperatureInfo()),
-    //       Positioned(top: 150, right: 10, child: TimeLeftWidget()),
-    //       Positioned(top: 50, right: 100, child: LevelInfo()),
-    //     ],
-    //   );
-    // });
   }
 }
-
-//
-// Center(
-// child: ElevatedButton(
-// onPressed: () {
-// showDialog(
-// context: context,
-// builder: (BuildContext context) {
-// return const LevelStartAlert(
-// foodName: 'Pasta',
-// image: 'allplanets',
-// );
-// },
-// );
-// },
-// child: Text('Show Dialog'),
-// ),
-// ),
