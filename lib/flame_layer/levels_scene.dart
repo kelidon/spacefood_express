@@ -7,9 +7,9 @@ import 'level.dart';
 class LevelsScene extends PositionComponent
     with FlameBlocListenable<GameStatsBloc, GameStatsState> {
   List<Level> levels = [
-    Level(),
-    Level(),
-    Level(),
+    Level(0),
+    Level(1),
+    Level(2),
   ];
 
   late Level currentLevel;

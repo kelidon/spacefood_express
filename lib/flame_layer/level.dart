@@ -5,15 +5,20 @@ import 'package:spacefood_express/actors/planet.dart';
 import 'package:spacefood_express/actors/player.dart';
 import 'package:spacefood_express/blocs/game_stats/game_stats_bloc.dart';
 import 'package:spacefood_express/flame_layer/spacefood_game.dart';
+import 'package:spacefood_express/utils/audio_manager.dart';
 
 import '../actors/models/planet_type.dart';
 
 class Level extends PositionComponent
     with HasGameRef<SpaceFoodGame>, FlameBlocListenable<GameStatsBloc, GameStatsState> {
+  int levelNumber;
   late PlayerComponent player;
   List<PlanetComponent> allPlanets = [];
   late PlanetComponent finishPlanet;
   late PlanetComponent spawnPlanet;
+
+
+  Level(this.levelNumber);
 
   void loadComponents() {
     final objectGroup = game.mapComponent!.tileMap.getLayer<ObjectGroup>('planets');

@@ -8,12 +8,19 @@ part 'game_stats_state.dart';
 
 class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
   GameStatsBloc() : super(const GameStatsState.empty()) {
-    on<NextLevel>(
-      (event, emit) => emit(
-        //if last - win
+    on<NextLevel>((event, emit) {
+      print(state.level);
+      print(state.level);
+      print(state.level);
+      emit(
         state.copyWith(level: state.level + 1, status: GameStatus.respawned),
-      ),
-    );
+      );
+      print(state.level);
+      AudioManager.stopBackgroundMusic();
+      AudioManager.playBackgroundMusic(
+        Sounds.fromLevel(state.level),
+      );
+    });
 
     on<LevelWin>((event, emit) {
       AudioManager.playSpecialEffects(Sounds.finish);

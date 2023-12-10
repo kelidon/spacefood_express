@@ -13,7 +13,6 @@ import 'package:spacefood_express/flame_layer/levels_scene.dart';
 import '../blocs/compass/compass_cubit.dart';
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
-import '../utils/audio_manager.dart';
 
 class GameStatsController extends Component
     with HasGameReference<SpaceFoodGame> {
@@ -86,9 +85,6 @@ class SpaceFoodGame extends FlameGame
       ),
     );
     await add(world);
-    AudioManager.playBackgroundMusic(
-      Sounds.fromLevel(statsBloc.state.level),
-    );
   }
 
   @override

@@ -22,6 +22,7 @@ class _FlutterLayerState extends State<FlutterLayer> {
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
     await AudioManager.init();
+    AudioManager.playBackgroundMusic(Sounds.fromLevel(0));
   }
 
   void showAlert(Widget alertWidget) {
