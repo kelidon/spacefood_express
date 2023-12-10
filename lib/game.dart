@@ -6,7 +6,6 @@ import 'blocs/game_stats/game_stats_bloc.dart';
 import 'blocs/inventory/inventory_bloc.dart';
 import 'flame_layer/spacefood_game.dart';
 import 'flutter_layer/flutter_layer.dart';
-import 'flutter_layer/win_lose_alert.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -20,15 +19,6 @@ class GamePage extends StatelessWidget {
           BlocProvider<InventoryBloc>(create: (_) => InventoryBloc()),
         ],
         child: const GameView(),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-              onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => const WinLoseAlert(isWinning: true))),
-        ],
       ),
     );
   }

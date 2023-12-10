@@ -9,7 +9,7 @@ class InventoryState extends Equatable {
     required this.time,
   });
 
-  const InventoryState.empty() : this(temperature: 0, time: 3);
+  const InventoryState.empty() : this(temperature: 50, time: 3);
 
   InventoryState copyWith({double? temperature, double? time}) {
     return InventoryState(temperature: temperature ?? this.temperature, time: time ?? this.time);

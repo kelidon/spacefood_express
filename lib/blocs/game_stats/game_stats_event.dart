@@ -4,22 +4,6 @@ abstract class GameStatsEvent extends Equatable {
   const GameStatsEvent();
 }
 
-class ScoreEventAdded extends GameStatsEvent {
-  const ScoreEventAdded(this.score);
-
-  final int score;
-
-  @override
-  List<Object?> get props => [score];
-}
-
-class PlayerDied extends GameStatsEvent {
-  const PlayerDied();
-
-  @override
-  List<Object?> get props => [];
-}
-
 class PlayerRespawned extends GameStatsEvent {
   const PlayerRespawned();
 
@@ -29,6 +13,29 @@ class PlayerRespawned extends GameStatsEvent {
 
 class NextLevel extends GameStatsEvent {
   const NextLevel();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class LevelLoose extends GameStatsEvent {
+  const LevelLoose({required this.isFreeze});
+
+  final bool isFreeze;
+
+  @override
+  List<Object?> get props => [];
+}
+
+class LevelWin extends GameStatsEvent {
+  const LevelWin();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GameWin extends GameStatsEvent {
+  const GameWin();
 
   @override
   List<Object?> get props => [];

@@ -109,7 +109,8 @@ class SpaceFoodGame extends FlameGame
     }
   }
 
-  void increaseScore() {
-    statsBloc.add(const ScoreEventAdded(100));
+  void resetLevel(GameStatsEvent event){
+    levelScene.currentLevel.resetPlayer();
+    statsBloc.add(event);
   }
 }

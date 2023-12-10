@@ -14,7 +14,7 @@ class TimeLeftWidget extends StatelessWidget {
         color: Colors.blue,
         height: 100,
         width: 20,
-        child: const Text('Time'),
+        child: Text(state.time.toString()),
       );
     });
   }

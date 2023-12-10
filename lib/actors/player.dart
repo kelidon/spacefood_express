@@ -4,10 +4,15 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:spacefood_express/actors/models/planet_type.dart';
 import 'package:spacefood_express/actors/planet.dart';
 import 'package:spacefood_express/blocs/game_stats/game_stats_bloc.dart';
 import 'package:spacefood_express/blocs/inventory/inventory_bloc.dart';
 import 'package:spacefood_express/flame_layer/spacefood_game.dart';
+
+const double temperatureSpeed = 0.1;
+const double tempLowerBound = 0;
+const double tempHigherBound = 100;
 
 class PlayerController extends Component
     with HasGameReference<SpaceFoodGame>, FlameBlocListenable<GameStatsBloc, GameStatsState> {
@@ -18,7 +23,7 @@ class PlayerController extends Component
 
   @override
   void onNewState(GameStatsState state) {
-    if (state.status == GameStatus.respawn || state.status == GameStatus.initial) {
+    if (state.status == GameStatus.respawned || state.status == GameStatus.initial) {
       game.statsBloc.add(const PlayerRespawned());
       // parent?.add(
       //   game.player = PlayerComponent(
@@ -73,6 +78,11 @@ class PlayerComponent extends SpriteAnimationComponent
   @override
   void onNewState(InventoryState state) {
     this.state = state;
+    if (state.temperature < tempLowerBound) {
+      game.resetLevel(const LevelLoose(isFreeze: true));
+    } else if (state.temperature > tempHigherBound) {
+      game.resetLevel(const LevelLoose(isFreeze: false));
+    }
   }
 
   void move(double deltaX, double deltaY) {
@@ -81,13 +91,14 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _circle() {
-    //add +1с
     double t = atan2(y - planet.yCenter, x - planet.xCenter);
 
     x = planet.xCenter + planet.radius * cos(t + planet.dAngle);
     y = planet.yCenter + planet.radius * sin(t + planet.dAngle);
 
     angle = t;
+
+    game.inventoryBloc.add(const TemperatureChange(temperatureSpeed));
   }
 
   void liftoff() {
@@ -99,10 +110,10 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _flyAway() {
-    //add -1с
-
     x += dX;
     y += dY;
+
+    game.inventoryBloc.add(const TemperatureChange(-temperatureSpeed));
   }
 
   ///
@@ -112,19 +123,25 @@ class PlayerComponent extends SpriteAnimationComponent
     isFlying = false;
     planet = planetComponent;
 
-    //todo
-    // game.levelScene.currentLevel.resetLevel();
-    // game.statsBloc.add(NextLevel());
+    if (planetComponent.planetType == PlanetType.finish) {
+      if(game.statsBloc.state.level == game.levelScene.levels.length-1) {
+        game.resetLevel(const GameWin());
+      } else {
+        game.resetLevel(const LevelWin());
+      }
+    }
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    if (isFlying) {
-      _flyAway();
-    } else {
-      _circle();
+    if (game.statsBloc.state.status == GameStatus.respawned) {
+      if (isFlying) {
+        _flyAway();
+      } else {
+        _circle();
+      }
     }
 
     if (destroyed) {

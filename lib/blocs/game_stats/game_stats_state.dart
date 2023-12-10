@@ -2,11 +2,11 @@ part of 'game_stats_bloc.dart';
 
 enum GameStatus {
   initial,
-  respawn,
   respawned,
-  gameOver,
-  levelLoose,
+  levelLooseFreeze,
+  levelLooseBurn,
   levelWin,
+  gameWin,
 }
 
 class GameStatsState extends Equatable {

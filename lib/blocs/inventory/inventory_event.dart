@@ -21,3 +21,10 @@ class TimeChange extends InventoryEvent {
   @override
   List<Object?> get props => [value];
 }
+
+class ResetInventory extends InventoryEvent {
+  const ResetInventory();
+
+  @override
+  List<Object?> get props => [];
+}

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'game_stats_event.dart';
+
 part 'game_stats_state.dart';
 
 class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
@@ -13,19 +14,30 @@ class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
       ),
     );
 
+    on<LevelWin>(
+      (event, emit) => emit(
+        //if last - win
+        state.copyWith(status: GameStatus.levelWin),
+      ),
+    );
+    on<LevelLoose>(
+      (event, emit) => emit(
+        state.copyWith(
+            status: event.isFreeze ? GameStatus.levelLooseFreeze : GameStatus.levelLooseBurn),
+      ),
+    );
+
     on<PlayerRespawned>(
       (event, emit) => emit(
         state.copyWith(status: GameStatus.respawned),
       ),
     );
 
-    on<PlayerDied>((event, emit) {
-      emit(
-        state.copyWith(
-          status: GameStatus.levelLoose,
-        ),
-      );
-    });
+    on<GameWin>(
+      (event, emit) => emit(
+        state.copyWith(status: GameStatus.gameWin),
+      ),
+    );
 
     on<GameReset>(
       (event, emit) => emit(

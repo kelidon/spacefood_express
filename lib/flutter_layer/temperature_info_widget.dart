@@ -14,7 +14,7 @@ class TemperatureInfo extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         color: Colors.orange,
         duration: const Duration(milliseconds: 400),
-        child: const Text('temp'),
+        child: Text(state.temperature.ceil().toString()),
       );
     });
   }

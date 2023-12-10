@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class LevelStartAlert extends StatelessWidget {
   final String foodName;
   final String image;
+  final Function() onStart;
 
-  const LevelStartAlert({super.key, required this.foodName, required this.image});
+  const LevelStartAlert({super.key, required this.foodName, required this.image, required this.onStart});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class LevelStartAlert extends StatelessWidget {
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
+            onStart();
           },
           child: const Text('Start'),
         ),
