@@ -86,9 +86,8 @@ class SpaceFoodGame extends FlameGame
       ),
     );
     await add(world);
-    statsBloc.state.level;
     AudioManager.playBackgroundMusic(
-      Sounds.fromLevel(1),
+      Sounds.fromLevel(statsBloc.state.level),
     );
   }
 
