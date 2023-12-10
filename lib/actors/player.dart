@@ -81,6 +81,8 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _circle() {
+
+    //add +1с
     double t = atan2(y - planet.yCenter, x - planet.xCenter);
 
     x = planet.xCenter + planet.radius * cos(t + planet.dAngle);
@@ -98,6 +100,8 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _flyAway() {
+    //add -1с
+
     x += dX;
     y += dY;
   }
