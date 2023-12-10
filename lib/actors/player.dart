@@ -26,19 +26,6 @@ class PlayerController extends Component
   void onNewState(GameStatsState state) {
     if (state.status == GameStatus.respawned || state.status == GameStatus.initial) {
       game.statsBloc.add(const PlayerRespawned());
-      // parent?.add(
-      //   game.player = PlayerComponent(
-      //     PlanetComponent(
-      //       20,
-      //       105,
-      //       505,
-      //       -0.05,
-      //       100,
-      //       100,
-      //       PlanetType.normal,
-      //     ),
-      //   ),
-      // );
     }
   }
 }

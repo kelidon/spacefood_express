@@ -23,7 +23,7 @@ class LevelStartAlert extends StatelessWidget {
             Navigator.of(context).pop();
             onStart();
           },
-          child: const Text('Start'),
+          child: const Text('Start', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
         ),
       ],
     );
