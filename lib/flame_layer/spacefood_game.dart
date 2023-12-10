@@ -15,13 +15,15 @@ import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
 import '../utils/audio_manager.dart';
 
-class GameStatsController extends Component with HasGameReference<SpaceFoodGame> {
+class GameStatsController extends Component
+    with HasGameReference<SpaceFoodGame> {
   @override
   Future<void>? onLoad() async {
     add(
       FlameBlocListener<GameStatsBloc, GameStatsState>(
         listenWhen: (previousState, newState) {
-          return previousState.status != newState.status && newState.status == GameStatus.initial;
+          return previousState.status != newState.status &&
+              newState.status == GameStatus.initial;
         },
         onNewState: (state) {
           //game.removeWhere((element) => element is EnemyComponent);
@@ -53,7 +55,7 @@ class SpaceFoodGame extends FlameGame
     //camera.viewport = FixedResolutionViewport(resolution: Vector2(2000, 2000));
 
     //load map
-    const double zoom = 0.8;
+    const double zoom = 1;
     camera.viewfinder.zoom = zoom;
     mapComponent = await TiledComponent.load('testmap.tmx', Vector2.all(32));
 
@@ -84,6 +86,10 @@ class SpaceFoodGame extends FlameGame
       ),
     );
     await add(world);
+    statsBloc.state.level;
+    AudioManager.playBackgroundMusic(
+      Sounds.fromLevel(1),
+    );
   }
 
   @override
@@ -115,7 +121,7 @@ class SpaceFoodGame extends FlameGame
     }
   }
 
-  void resetLevel(GameStatsEvent event){
+  void resetLevel(GameStatsEvent event) {
     levelScene.currentLevel.resetPlayer();
     statsBloc.add(event);
   }

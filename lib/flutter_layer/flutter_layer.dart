@@ -29,7 +29,6 @@ class FlutterLayer extends StatelessWidget {
     }
 
     final statsBloc = context.watch<GameStatsBloc>();
-
     switch (statsBloc.state.status) {
       case GameStatus.respawned:
         break;
@@ -38,11 +37,6 @@ class FlutterLayer extends StatelessWidget {
           foodName: 'Pasta',
           image: 'background',
           onStart: () {
-            AudioManager.playBackgroundMusic('example.mp3');
-            Future.delayed(const Duration(seconds: 5), () {
-              AudioManager.stopBackgroundMusic();
-              AudioManager.clearAudioCache('example.mp3');
-            });
             context.read<InventoryBloc>().add(const ResetInventory());
             statsBloc.add(const PlayerRespawned());
           },
