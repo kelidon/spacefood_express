@@ -85,6 +85,8 @@ class PlayerComponent extends SpriteAnimationComponent
 
     x = planet.xCenter + planet.radius * cos(t + planet.dAngle);
     y = planet.yCenter + planet.radius * sin(t + planet.dAngle);
+
+    angle = t;
   }
 
   void liftoff() {
@@ -93,8 +95,6 @@ class PlayerComponent extends SpriteAnimationComponent
     double t = atan2(y - planet.yCenter, x - planet.xCenter);
     dX = -x + planet.xCenter + planet.radius * cos(t + planet.dAngle);
     dY = -y + planet.yCenter + planet.radius * sin(t + planet.dAngle);
-
-    angle = t;
   }
 
   void _flyAway() {
