@@ -2,13 +2,15 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'game_stats_event.dart';
+
 part 'game_stats_state.dart';
 
 class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
   GameStatsBloc() : super(const GameStatsState.empty()) {
-    on<ScoreEventAdded>(
+    on<NextLevel>(
       (event, emit) => emit(
-        state.copyWith(score: state.score + event.score),
+        //if last - win
+        state.copyWith(level: state.level+1, status: GameStatus.respawned),
       ),
     );
 
@@ -19,21 +21,11 @@ class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
     );
 
     on<PlayerDied>((event, emit) {
-      if (state.lives > 1) {
-        emit(
-          state.copyWith(
-            lives: state.lives - 1,
-            status: GameStatus.respawn,
-          ),
-        );
-      } else {
-        emit(
-          state.copyWith(
-            lives: 0,
-            status: GameStatus.gameOver,
-          ),
-        );
-      }
+      emit(
+        state.copyWith(
+          status: GameStatus.levelLoose,
+        ),
+      );
     });
 
     on<GameReset>(

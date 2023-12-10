@@ -4,16 +4,13 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
-import 'package:spacefood_express/actors/models/planet_type.dart';
 import 'package:spacefood_express/actors/planet.dart';
 import 'package:spacefood_express/blocs/game_stats/game_stats_bloc.dart';
 import 'package:spacefood_express/blocs/inventory/inventory_bloc.dart';
 import 'package:spacefood_express/flame_layer/spacefood_game.dart';
 
 class PlayerController extends Component
-    with
-        HasGameReference<SpaceFoodGame>,
-        FlameBlocListenable<GameStatsBloc, GameStatsState> {
+    with HasGameReference<SpaceFoodGame>, FlameBlocListenable<GameStatsBloc, GameStatsState> {
   @override
   bool listenWhen(GameStatsState previousState, GameStatsState newState) {
     return previousState.status != newState.status;
@@ -21,22 +18,21 @@ class PlayerController extends Component
 
   @override
   void onNewState(GameStatsState state) {
-    if (state.status == GameStatus.respawn ||
-        state.status == GameStatus.initial) {
+    if (state.status == GameStatus.respawn || state.status == GameStatus.initial) {
       game.statsBloc.add(const PlayerRespawned());
-      parent?.add(
-        game.player = PlayerComponent(
-          PlanetComponent(
-            20,
-            105,
-            505,
-            -0.05,
-            100,
-            100,
-            PlanetType.normal,
-          ),
-        ),
-      );
+      // parent?.add(
+      //   game.player = PlayerComponent(
+      //     PlanetComponent(
+      //       20,
+      //       105,
+      //       505,
+      //       -0.05,
+      //       100,
+      //       100,
+      //       PlanetType.normal,
+      //     ),
+      //   ),
+      // );
     }
   }
 }
@@ -50,24 +46,12 @@ class PlayerComponent extends SpriteAnimationComponent
   bool destroyed = false;
   bool isFlying = false;
 
-  double dAngle;
-
-  //todo class
-  ///4real bro
-  double xc;
-  double yc;
-  double r;
+  PlanetComponent planet;
 
   late double dY;
   late double dX;
 
-  PlayerComponent(
-    PlanetComponent planetComponent,
-  )   : xc = planetComponent.xCenter,
-        yc = planetComponent.yCenter,
-        dAngle = planetComponent.dAngle,
-        r = planetComponent.radius,
-        super(size: Vector2(50, 75), position: Vector2(100, 500)) {
+  PlayerComponent(this.planet) : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
     add(RectangleHitbox());
   }
 
@@ -99,18 +83,20 @@ class PlayerComponent extends SpriteAnimationComponent
   void _circle() {
 
     //add +1с
-    double t = atan2(y - yc, x - xc);
+    double t = atan2(y - planet.yCenter, x - planet.xCenter);
 
-    x = xc + r * cos(t + dAngle);
-    y = yc + r * sin(t + dAngle);
+    x = planet.xCenter + planet.radius * cos(t + planet.dAngle);
+    y = planet.yCenter + planet.radius * sin(t + planet.dAngle);
+
+    angle = t;
   }
 
   void liftoff() {
     isFlying = true;
 
-    double t = atan2(y - yc, x - xc);
-    dX = -x + xc + r * cos(t + dAngle);
-    dY = -y + yc + r * sin(t + dAngle);
+    double t = atan2(y - planet.yCenter, x - planet.xCenter);
+    dX = -x + planet.xCenter + planet.radius * cos(t + planet.dAngle);
+    dY = -y + planet.yCenter + planet.radius * sin(t + planet.dAngle);
   }
 
   void _flyAway() {
@@ -125,10 +111,11 @@ class PlayerComponent extends SpriteAnimationComponent
     PlanetComponent planetComponent,
   ) {
     isFlying = false;
-    xc = planetComponent.x;
-    yc = planetComponent.y;
-    r = planetComponent.radius;
-    dAngle = planetComponent.dAngle;
+    planet = planetComponent;
+
+    //todo
+    // game.levelScene.currentLevel.resetLevel();
+    // game.statsBloc.add(NextLevel());
   }
 
   @override

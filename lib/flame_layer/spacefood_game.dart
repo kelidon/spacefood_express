@@ -10,8 +10,8 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:spacefood_express/actors/models/planet_type.dart';
 import 'package:spacefood_express/actors/planet.dart';
+import 'package:spacefood_express/flame_layer/levels_scene.dart';
 
-import '../actors/player.dart';
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
 
@@ -35,7 +35,6 @@ class GameStatsController extends Component
 
 class SpaceFoodGame extends FlameGame
     with PanDetector, HasCollisionDetection, HasKeyboardHandlerComponents {
-  late PlayerComponent player;
   TiledComponent? mapComponent;
 
   final GameStatsBloc statsBloc;
@@ -45,6 +44,8 @@ class SpaceFoodGame extends FlameGame
     required this.inventoryBloc,
     required this.statsBloc,
   });
+
+  late LevelsScene levelScene;
 
   @override
   Future<void> onLoad() async {
@@ -65,41 +66,7 @@ class SpaceFoodGame extends FlameGame
     );
     camera.setBounds(cameraVisibleArea, considerViewport: false);
 
-    List<PlanetComponent> allPlanets = [];
-
-    final objectGroup = mapComponent!.tileMap.getLayer<ObjectGroup>('planets');
-    for (final object in objectGroup!.objects) {
-      PlanetType planetType;
-      Property? property = object.properties.byName['type'];
-      if (property != null) {
-        planetType = PlanetType.fromString(property.value);
-      } else {
-        planetType = PlanetType.normal;
-      }
-      allPlanets.add(
-        PlanetComponent(
-          object.height / 1.1,
-          object.x,
-          object.y,
-          -0.02,
-          object.height,
-          object.width,
-          planetType,
-        ),
-      );
-    }
-
-    player = PlayerComponent(
-      allPlanets.firstWhere(
-        (e) => e.planetType == PlanetType.spawn,
-      ),
-    );
-
-    //center player relative to the camera;
-    player.anchor = Anchor.center;
-
-    //obviously;
-    camera.follow(player);
+    levelScene = LevelsScene();
 
     await world.add(
       FlameMultiBlocProvider(
@@ -111,13 +78,9 @@ class SpaceFoodGame extends FlameGame
             value: inventoryBloc,
           ),
         ],
-        children: [
-          mapComponent!,
-          player,
-        ],
+        children: [mapComponent!, levelScene],
       ),
     );
-    world.addAll(allPlanets);
     await add(world);
   }
 
@@ -141,44 +104,12 @@ class SpaceFoodGame extends FlameGame
   }
 
   @override
-  void update(double dt) {
-    super.update(dt);
-    //stop player when reach bounds
-    if (mapComponent != null) {
-      player.position = Vector2(
-        player.position.x.clamp(0, mapComponent!.size.x),
-        player.position.y.clamp(0, mapComponent!.size.y),
-      );
-    }
-  }
-
-  @override
   Color backgroundColor() => Colors.deepPurple;
 
   @override
-  void onPanStart(_) {
-    //player.beginFire();
-  }
-
-  @override
-  void onPanEnd(_) {
-    //player.stopFire();
-  }
-
-  @override
-  void onPanCancel() {
-    //player.stopFire();
-  }
-
-  @override
-  void onPanUpdate(DragUpdateInfo info) {
-    //player.move(info.delta.global.x, info.delta.global.y);
-  }
-
-  @override
   void onPanDown(DragDownInfo info) {
-    if (!player.isFlying) {
-      player.liftoff();
+    if (!levelScene.currentLevel.player.isFlying) {
+      levelScene.currentLevel.player.liftoff();
     }
   }
 

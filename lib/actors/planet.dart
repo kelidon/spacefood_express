@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 
 import '../flame_layer/spacefood_game.dart';
 import 'models/planet_type.dart';
@@ -30,6 +31,7 @@ class PlanetComponent extends SpriteAnimationComponent
 
   @override
   Future<void> onLoad() async {
+    debugColor = Colors.red;
     await super.onLoad();
     animation = await game.loadSpriteAnimation(
       'reign.png',
@@ -41,13 +43,5 @@ class PlanetComponent extends SpriteAnimationComponent
     );
     size = Vector2(height, width);
     anchor = Anchor.center;
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (y >= game.size.y) {
-      removeFromParent();
-    }
   }
 }
