@@ -7,6 +7,7 @@ import 'package:spacefood_express/flutter_layer/win_lose_alert.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
+import '../utils/audio_manager.dart';
 import 'level_start_alert.dart';
 
 class FlutterLayer extends StatelessWidget {
@@ -17,8 +18,9 @@ class FlutterLayer extends StatelessWidget {
     void showAlert(Widget alertWidget) {
       Future.delayed(
           Duration.zero,
-          () =>
-              showDialog<String>(context: context, builder: (BuildContext context) => alertWidget));
+          () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => alertWidget));
     }
 
     final statsBloc = context.watch<GameStatsBloc>();
@@ -27,10 +29,16 @@ class FlutterLayer extends StatelessWidget {
     switch (statsBloc.state.status) {
       case GameStatus.initial:
         showAlert(LevelStartAlert(
-          foodName: 'Pasta',
-          image: 'background',
-          onStart: () => statsBloc.add(const PlayerRespawned()),
-        ));
+            foodName: 'Pasta',
+            image: 'background',
+            onStart: () {
+              AudioManager.playBackgroundMusic('example.mp3');
+              Future.delayed(const Duration(seconds: 5), () {
+                AudioManager.stopBackgroundMusic();
+                AudioManager.clearAudioCache('example.mp3');
+              });
+              statsBloc.add(const PlayerRespawned());
+            }));
       case GameStatus.respawned:
         inventoryBloc.add(const ResetInventory());
       case GameStatus.levelLooseFreeze:
