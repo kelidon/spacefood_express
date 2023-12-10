@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
+import '../utils/strings.dart';
 
 class WinLoseAlert extends StatelessWidget {
   final bool isWinning;
@@ -7,29 +11,25 @@ class WinLoseAlert extends StatelessWidget {
 
   const WinLoseAlert({super.key, required this.isWinning, required this.onContinue, this.isFreeze});
 
-  List<String> passedLevel(bool win) {
+  String? passedLevel(bool win) {
     if (win) {
-      return ['Поздравляю с успешной доставкой', 'Ты настоящий роллеркостер вкусовых ощущений'];
+      return Strings().positiveFeedback[Random().nextInt(5)];
     } else {
-      return [
-        'Негодник, ты подвёл меня и всю семью, ${isFreeze!?"freezed!":"burn!"}',
-        'Мы несколько раз подумаем, прежде чем заказывать у вас снова',
-      ];
+      return '${Strings().negativeFeedback[Random().nextInt(5)]} ${isFreeze!?"freezed!":"burn!"}';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(passedLevel(isWinning)[0]),
-      content: Text(passedLevel(isWinning)[1]),
+      title: Text(passedLevel(isWinning)?? ''),
       actions: <Widget>[
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
             onContinue();
           },
-          child: Text(isWinning ? 'Далее' : 'Переиграть'),
+          child: Text(isWinning ? 'Next' : 'Replay'),
         ),
       ],
     );
