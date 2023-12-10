@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spacefood_express/flutter_layer/temperature_info_widget.dart';
@@ -78,16 +80,17 @@ class FlutterLayer extends StatelessWidget {
             }));
     }
     return const Padding(
-      padding: EdgeInsets.all(36),
+      padding: EdgeInsets.all(32),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TimeLeftWidget(),
+          //TimeLeftWidget(),
+          SizedBox.shrink(),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('pause'),
+              //Text('pause'),
               Spacer(),
               CompassWidget(),
               SizedBox(
