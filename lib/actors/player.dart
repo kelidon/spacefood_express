@@ -81,7 +81,6 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _circle() {
-
     //add +1с
     double t = atan2(y - planet.yCenter, x - planet.xCenter);
 

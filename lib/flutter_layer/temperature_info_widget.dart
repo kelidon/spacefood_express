@@ -8,16 +8,14 @@ class TemperatureInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InventoryBloc, InventoryState>(
-        builder: (context, state) {
-          return AnimatedContainer(
-            height: 50,
-            padding: const EdgeInsets.all(10),
-            color: Colors.orange,
-            duration: const Duration(milliseconds: 400),
-            child: const Text('temp'),
-          );
-        }
-    );
+    return BlocBuilder<InventoryBloc, InventoryState>(builder: (context, state) {
+      return AnimatedContainer(
+        height: 50,
+        padding: const EdgeInsets.all(10),
+        color: Colors.orange,
+        duration: const Duration(milliseconds: 400),
+        child: const Text('temp'),
+      );
+    });
   }
 }

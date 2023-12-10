@@ -50,10 +50,10 @@ class Level extends PositionComponent
     add(player);
   }
 
-  void resetLevel(){
+  void resetLevel() {
     print("here");
     player.planet = allPlanets.firstWhere(
-          (e) => e.planetType == PlanetType.spawn,
+      (e) => e.planetType == PlanetType.spawn,
     );
     player.isFlying = false;
   }

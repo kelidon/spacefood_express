@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'game_stats_event.dart';
-
 part 'game_stats_state.dart';
 
 class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
@@ -10,7 +9,7 @@ class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
     on<NextLevel>(
       (event, emit) => emit(
         //if last - win
-        state.copyWith(level: state.level+1, status: GameStatus.respawned),
+        state.copyWith(level: state.level + 1, status: GameStatus.respawned),
       ),
     );
 

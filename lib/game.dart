@@ -27,8 +27,7 @@ class GamePage extends StatelessWidget {
           FloatingActionButton(
               onPressed: () => showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) =>
-                      const WinLoseAlert(isWinning: true))),
+                  builder: (BuildContext context) => const WinLoseAlert(isWinning: true))),
         ],
       ),
     );

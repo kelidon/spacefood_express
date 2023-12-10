@@ -8,22 +8,18 @@ import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
-import 'package:spacefood_express/actors/models/planet_type.dart';
-import 'package:spacefood_express/actors/planet.dart';
 import 'package:spacefood_express/flame_layer/levels_scene.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
 
-class GameStatsController extends Component
-    with HasGameReference<SpaceFoodGame> {
+class GameStatsController extends Component with HasGameReference<SpaceFoodGame> {
   @override
   Future<void>? onLoad() async {
     add(
       FlameBlocListener<GameStatsBloc, GameStatsState>(
         listenWhen: (previousState, newState) {
-          return previousState.status != newState.status &&
-              newState.status == GameStatus.initial;
+          return previousState.status != newState.status && newState.status == GameStatus.initial;
         },
         onNewState: (state) {
           //game.removeWhere((element) => element is EnemyComponent);
