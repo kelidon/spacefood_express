@@ -11,10 +11,10 @@ class LevelStartAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.white.withOpacity(0.4),
+      backgroundColor: Colors.white.withOpacity(0.6),
       title: Align(
           alignment: Alignment.bottomCenter,
-          child: Text('Your goal: $foodName', style: TextStyle(color: Colors.white))),
+          child: Text('New order: $foodName', style: TextStyle(color: Colors.white))),
       content: Image.asset(
         'assets/images/food/$image.png',
         height: 150,
@@ -28,7 +28,7 @@ class LevelStartAlert extends StatelessWidget {
           },
           child: const Text(
             'Start',
-            style: TextStyle(color: Colors.red),
+            style: TextStyle(color: Colors.redAccent),
           ),
         ),
       ],

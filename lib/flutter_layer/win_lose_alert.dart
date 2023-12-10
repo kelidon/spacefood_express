@@ -8,23 +8,31 @@ class WinLoseAlert extends StatelessWidget {
   final bool isWinning;
   final bool? isFreeze;
   final String image;
-  final Function () onContinue;
+  final Function() onContinue;
 
-  const WinLoseAlert({super.key, required this.isWinning, required this.onContinue, this.isFreeze, required this.image});
+  const WinLoseAlert(
+      {super.key,
+      required this.isWinning,
+      required this.onContinue,
+      this.isFreeze,
+      required this.image});
 
   String? passedLevel(bool win) {
     if (win) {
       return Strings().positiveFeedback[Random().nextInt(5)];
     } else {
-      return '${Strings().negativeFeedback[Random().nextInt(5)]} ${isFreeze!?"freezed!":"burn!"}';
+      return '${Strings().negativeFeedback[Random().nextInt(5)]} ${isFreeze! ? "It's frozen!" : "It's burned!"}';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.white.withOpacity(0.4),
-      title: Text(passedLevel(isWinning) ?? '', style: TextStyle(color: Colors.white),),
+      backgroundColor: Colors.white.withOpacity(0.6),
+      title: Text(
+        passedLevel(isWinning) ?? '',
+        style: TextStyle(color: Colors.white),
+      ),
       content: Column(
         children: [
           Image.asset(
@@ -40,7 +48,10 @@ class WinLoseAlert extends StatelessWidget {
             Navigator.of(context).pop();
             onContinue();
           },
-          child: Text(isWinning ? 'Next' : 'Replay', style: TextStyle(color: Colors.red),),
+          child: Text(
+            isWinning ? 'Next' : 'Replay',
+            style: TextStyle(color: Colors.redAccent),
+          ),
         ),
       ],
     );
