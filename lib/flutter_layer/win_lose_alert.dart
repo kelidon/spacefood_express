@@ -24,7 +24,7 @@ class WinLoseAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white.withOpacity(0.4),
-      title: Text(passedLevel(isWinning) ?? ''),
+      title: Text(passedLevel(isWinning) ?? '', style: TextStyle(color: Colors.white),),
       content: Column(
         children: [
           Image.asset(
@@ -40,7 +40,7 @@ class WinLoseAlert extends StatelessWidget {
             Navigator.of(context).pop();
             onContinue();
           },
-          child: Text(isWinning ? 'Next' : 'Replay'),
+          child: Text(isWinning ? 'Next' : 'Replay', style: TextStyle(color: Colors.red),),
         ),
       ],
     );
