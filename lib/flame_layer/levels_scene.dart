@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:spacefood_express/utils/audio_manager.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
 import 'level.dart';
@@ -27,7 +28,9 @@ class LevelsScene extends PositionComponent
   void onNewState(GameStatsState state) {
     for (int i = 1; i < levels.length; i++) {
       if (state.level == i + 1) {
-        if(levels[i].parent != null) {
+        AudioManager.stopBackgroundMusic();
+        AudioManager.playBackgroundMusic(Sounds.fromLevel(state.level));
+        if (levels[i].parent != null) {
           remove(levels[i]);
           add(levels[i + 1]);
           currentLevel = levels[i + 1];

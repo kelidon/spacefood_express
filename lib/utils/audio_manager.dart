@@ -47,6 +47,7 @@ class AudioManager {
 
   static void playBackgroundMusic(Sounds sound) {
     if (backgroundMusic.value) {
+      FlameAudio.bgm.stop();
       FlameAudio.bgm.play(sound.path);
     }
   }
