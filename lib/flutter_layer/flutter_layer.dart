@@ -7,6 +7,7 @@ import 'package:spacefood_express/flutter_layer/win_lose_alert.dart';
 
 import '../blocs/game_stats/game_stats_bloc.dart';
 import '../blocs/inventory/inventory_bloc.dart';
+import '../utils/audio_manager.dart';
 import 'level_start_alert.dart';
 
 class FlutterLayer extends StatelessWidget {
@@ -34,7 +35,11 @@ class FlutterLayer extends StatelessWidget {
           foodName: 'Pasta',
           image: 'background',
           onStart: () {
-            context.read<InventoryBloc>().add(const ResetInventory());
+            AudioManager.playBackgroundMusic('example.mp3');
+            Future.delayed(const Duration(seconds: 5), () {
+              AudioManager.stopBackgroundMusic();
+              AudioManager.clearAudioCache('example.mp3');
+            });
             statsBloc.add(const PlayerRespawned());
           },
         ));
