@@ -1,0 +1,8 @@
+# melos_managed_dependency_overrides: flame_layer,flutter_layer,shared
+dependency_overrides:
+  flame_layer:
+    path: ../../packages/flame_layer
+  flutter_layer:
+    path: ../../packages/flutter_layer
+  shared:
+    path: ../../packages/shared

@@ -1,0 +1,4 @@
+name: spacefood_express
+packages:
+  - packages/*
+  - apps/*
