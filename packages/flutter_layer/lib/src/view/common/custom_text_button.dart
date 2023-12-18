@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layer/common/constants/ui_constants.dart';
-import 'package:flutter_layer/common/extensions/extensions.dart';
+import 'package:flutter_layer/src/common/constants/ui_constants.dart';
+import 'package:flutter_layer/src/common/extensions/extensions.dart';
 
 class CustomTextButton extends StatefulWidget {
   const CustomTextButton({

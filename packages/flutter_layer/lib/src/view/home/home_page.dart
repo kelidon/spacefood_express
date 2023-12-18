@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_layer/common/constants/ui_constants.dart';
-import 'package:flutter_layer/common/extensions/extensions.dart';
-import 'package:flutter_layer/view/common/custom_icon_button.dart';
-import 'package:flutter_layer/view/common/custom_text_button.dart';
-import 'package:flutter_layer/view/home/widgets/animated_circle/animated_circle.dart';
+import 'package:flutter_layer/src/common/constants/ui_constants.dart';
+import 'package:flutter_layer/src/common/extensions/extensions.dart';
+import 'package:flutter_layer/src/view/common/custom_icon_button.dart';
+import 'package:flutter_layer/src/view/common/custom_text_button.dart';
+import 'package:flutter_layer/src/view/home/widgets/animated_circle/animated_circle.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

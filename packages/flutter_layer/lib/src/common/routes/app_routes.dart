@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layer/view/home/home_page.dart';
+import 'package:flutter_layer/src/view/home/home_page.dart';
 
 class AppRoutes {
   static const String splashRoute = '/splash';
