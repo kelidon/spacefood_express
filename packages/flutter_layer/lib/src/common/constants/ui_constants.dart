@@ -1,3 +1,5 @@
+//ignore_for_file: unused_field
+
 typedef UIC = _UiConstants;
 
 class _UiConstants {
