@@ -162,7 +162,7 @@ class HomePageLevelSelector extends StatelessWidget {
               itemBuilder: (context, i) {
                 return Center(
                   child: CustomTextButton(
-                    text: 'Level ${i.toString()}',
+                    text: 'Level $i',
                     onTap: () {},
                   ),
                 );

@@ -20,15 +20,18 @@ class GameStatsBloc extends Bloc<GameStatsEvent, GameStatsState> {
         state.copyWith(status: GameStatus.levelWin),
       );
     });
-    on<LevelLoose>((event, emit) {
-      AudioManager.playSpecialEffects(Sounds.dead);
-      emit(
-        state.copyWith(
+    on<LevelLoose>(
+      (event, emit) {
+        AudioManager.playSpecialEffects(Sounds.dead);
+        emit(
+          state.copyWith(
             status: event.isFreeze
                 ? GameStatus.levelLooseFreeze
-                : GameStatus.levelLooseBurn),
-      );
-    });
+                : GameStatus.levelLooseBurn,
+          ),
+        );
+      },
+    );
 
     on<PlayerRespawned>((event, emit) {
       AudioManager.playSpecialEffects(Sounds.start);

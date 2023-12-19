@@ -34,7 +34,7 @@ class _CustomIconButtonState extends State<CustomIconButton>
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
-    _animation = Tween<double>(begin: 0.0, end: 5.0).animate(_controller);
+    _animation = Tween<double>(begin: 0, end: 5).animate(_controller);
   }
 
   @override
@@ -68,7 +68,6 @@ class _CustomIconButtonState extends State<CustomIconButton>
                   BoxShadow(
                     color: widget.color ?? Colors.white,
                     blurRadius: _animation.value,
-                    spreadRadius: 0,
                   ),
                 ],
               );

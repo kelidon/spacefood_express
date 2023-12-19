@@ -32,7 +32,7 @@ class _CustomTextButtonState extends State<CustomTextButton>
       vsync: this,
       duration: UIC.commonAnimationDuration,
     );
-    _animation = Tween<double>(begin: 0.0, end: 5.0).animate(_controller);
+    _animation = Tween<double>(begin: 0, end: 5).animate(_controller);
   }
 
   @override
@@ -70,7 +70,6 @@ class _CustomTextButtonState extends State<CustomTextButton>
                       shadows: [
                         BoxShadow(
                           color: textColor,
-                          spreadRadius: 0,
                           blurRadius: _animation.value,
                         ),
                       ],

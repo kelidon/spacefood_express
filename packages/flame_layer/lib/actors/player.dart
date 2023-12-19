@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flame_layer/actors/models/planet_type.dart';
 import 'package:flame_layer/actors/planet.dart';
 import 'package:flame_layer/blocs/game_stats/game_stats_bloc.dart';
 import 'package:flame_layer/blocs/inventory/inventory_bloc.dart';
@@ -10,14 +11,14 @@ import 'package:flame_layer/flame_layer/spacefood_game.dart';
 import 'package:flame_layer/utils/audio_manager.dart';
 import 'package:flutter/services.dart';
 
-import 'models/planet_type.dart';
-
 const double temperatureSpeed = 0.1;
 const double tempLowerBound = 0;
 const double tempHigherBound = 100;
 
 class PlayerController extends Component
-    with HasGameReference<SpaceFoodGame>, FlameBlocListenable<GameStatsBloc, GameStatsState> {
+    with
+        HasGameReference<SpaceFoodGame>,
+        FlameBlocListenable<GameStatsBloc, GameStatsState> {
   @override
   bool listenWhen(GameStatsState previousState, GameStatsState newState) {
     return previousState.status != newState.status;
@@ -25,7 +26,8 @@ class PlayerController extends Component
 
   @override
   void onNewState(GameStatsState state) {
-    if (state.status == GameStatus.respawned || state.status == GameStatus.initial) {
+    if (state.status == GameStatus.respawned ||
+        state.status == GameStatus.initial) {
       game.statsBloc.add(const PlayerRespawned());
       // parent?.add(
       //   game.player = PlayerComponent(
@@ -50,6 +52,11 @@ class PlayerComponent extends SpriteAnimationComponent
         CollisionCallbacks,
         KeyboardHandler,
         FlameBlocListenable<InventoryBloc, InventoryState> {
+  PlayerComponent(this.planet)
+      : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
+    add(RectangleHitbox());
+  }
+
   bool destroyed = false;
   bool isFlying = false;
 
@@ -57,10 +64,6 @@ class PlayerComponent extends SpriteAnimationComponent
 
   late double dY;
   late double dX;
-
-  PlayerComponent(this.planet) : super(size: Vector2(50, 75), position: Vector2(100, 500)) {
-    add(RectangleHitbox());
-  }
 
   @override
   Future<void> onLoad() async {
@@ -95,7 +98,7 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   void _circle() {
-    double t = atan2(y - planet.yCenter, x - planet.xCenter);
+    final t = atan2(y - planet.yCenter, x - planet.xCenter);
 
     x = planet.xCenter + planet.radius * cos(t + planet.dAngle);
     y = planet.yCenter + planet.radius * sin(t + planet.dAngle);
@@ -107,7 +110,7 @@ class PlayerComponent extends SpriteAnimationComponent
 
   void liftoff() {
     isFlying = true;
-    double t = atan2(y - planet.yCenter, x - planet.xCenter);
+    final t = atan2(y - planet.yCenter, x - planet.xCenter);
     dX = -x + planet.xCenter + planet.radius * cos(t + planet.dAngle);
     dY = -y + planet.yCenter + planet.radius * sin(t + planet.dAngle);
   }
@@ -120,7 +123,9 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   ///
-  void hitPlanet(PlanetComponent planetComponent,) {
+  void hitPlanet(
+    PlanetComponent planetComponent,
+  ) {
     isFlying = false;
     planet = planetComponent;
     AudioManager.playSpecialEffects(Sounds.attraction);
@@ -134,8 +139,8 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   double compassAngle() {
-    var finishPlanet = game.levelScene.currentLevel.finishPlanet;
-    return atan2((finishPlanet.yCenter - y), (finishPlanet.xCenter - x)) - pi/2;
+    final finishPlanet = game.levelScene.currentLevel.finishPlanet;
+    return atan2(finishPlanet.yCenter - y, finishPlanet.xCenter - x) - pi / 2;
   }
 
   @override
@@ -157,8 +162,10 @@ class PlayerComponent extends SpriteAnimationComponent
   }
 
   @override
-  bool onKeyEvent(RawKeyEvent event,
-      Set<LogicalKeyboardKey> keysPressed,) {
+  bool onKeyEvent(
+    RawKeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
     if (keysPressed.contains(LogicalKeyboardKey.tab)) {
       //todo
 

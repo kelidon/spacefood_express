@@ -10,11 +10,11 @@ enum Sounds {
   level2('level2.mp3'),
   level3('level3.mp3');
 
-  final String path;
-
   const Sounds(this.path);
 
-  static fromLevel(int level) {
+  final String path;
+
+  static Sounds fromLevel(int level) {
     switch (level) {
       case 0:
         return level1;
@@ -36,7 +36,7 @@ class AudioManager {
     FlameAudio.bgm.initialize();
 
     await FlameAudio.audioCache
-        .loadAll([for (var sound in Sounds.values) sound.path]);
+        .loadAll([for (final sound in Sounds.values) sound.path]);
   }
 
   static void playSpecialEffects(Sounds sound) {

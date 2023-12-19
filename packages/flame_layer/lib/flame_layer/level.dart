@@ -1,36 +1,33 @@
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flame_layer/actors/models/planet_type.dart';
 import 'package:flame_layer/actors/planet.dart';
 import 'package:flame_layer/actors/player.dart';
 import 'package:flame_layer/blocs/game_stats/game_stats_bloc.dart';
 import 'package:flame_layer/flame_layer/spacefood_game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
-import '../actors/models/planet_type.dart';
-
 class Level extends PositionComponent
-    with HasGameRef<SpaceFoodGame>, FlameBlocListenable<GameStatsBloc, GameStatsState> {
+    with
+        HasGameRef<SpaceFoodGame>,
+        FlameBlocListenable<GameStatsBloc, GameStatsState> {
   int levelNumber;
   late PlayerComponent player;
   List<PlanetComponent> allPlanets = [];
   late PlanetComponent finishPlanet;
   late PlanetComponent spawnPlanet;
 
-
   Level(this.levelNumber);
 
   void loadComponents() {
-    final objectGroup = game.mapComponent!.tileMap.getLayer<ObjectGroup>('planets');
+    final objectGroup =
+        game.mapComponent!.tileMap.getLayer<ObjectGroup>('planets');
     for (final object in objectGroup!.objects) {
       PlanetType planetType;
-      Property? property = object.properties.byName['type'];
-      if (property != null) {
-        planetType = PlanetType.fromString(property.value);
-      } else {
-        planetType = PlanetType.normal;
-      }
+      final property = object.properties.byName['type']! as Property<String>;
+      planetType = PlanetType.fromString(property.value);
 
-      var planet = PlanetComponent(
+      final planet = PlanetComponent(
         object.height / 1.1,
         object.x,
         object.y,
@@ -63,8 +60,9 @@ class Level extends PositionComponent
   }
 
   void resetPlayer() {
-    player.planet = spawnPlanet;
-    player.isFlying = false;
+    player
+      ..planet = spawnPlanet
+      ..isFlying = false;
   }
 
   @override

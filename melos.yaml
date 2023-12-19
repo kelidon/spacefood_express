@@ -2,3 +2,8 @@ name: spacefood_express
 packages:
   - packages/*
   - apps/*
+
+command:
+  bootstrap:
+    dev_dependencies:
+      very_good_analysis: ^5.1.0

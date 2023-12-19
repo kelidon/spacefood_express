@@ -1,6 +1,5 @@
 part of '../animated_circle.dart';
 
-
 extension _AnimatedCircleStateExt on _AnimatedCircleState {}
 
 mixin _AnimatedCircleStateMixin<T extends StatefulWidget> on State<T> {
@@ -49,12 +48,12 @@ mixin _AnimatedCircleStateMixin<T extends StatefulWidget> on State<T> {
     _colorController = AnimationController(
       vsync: parent,
       duration: colorAnimationDuration,
-    )..repeat(reverse: false);
+    )..repeat();
     _colorAnimation = TweenSequence<Color?>(
       List.generate(
         tweenSequenceColors.length,
         (i) => TweenSequenceItem(
-          weight: 1.0,
+          weight: 1,
           tween: ColorTween(
             begin: tweenSequenceColors[((i - 1) % tweenSequenceColors.length)],
             end: tweenSequenceColors[i],

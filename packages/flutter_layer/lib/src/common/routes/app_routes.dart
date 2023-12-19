@@ -7,13 +7,14 @@ class AppRoutes {
   static const String settingsRoute = '/settings';
   static const String gameRoute = '/game';
 
-  Route? onGenerateRoute(RouteSettings settings) {
+  Route<void>? onGenerateRoute(RouteSettings settings) {
     final String? name = settings.name;
-    // final RouteParameters? parameters = settings.arguments as RouteParameters?;
+    // final RouteParameters? parameters =
+    // settings.arguments as RouteParameters?;
     final Widget page;
     switch (name) {
       case gameRoute:
-        // page = const GamePage();
+      // page = const GamePage();
       case homeRoute:
       default:
         page = const HomePage();

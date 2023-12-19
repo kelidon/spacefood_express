@@ -12,7 +12,10 @@ class InventoryState extends Equatable {
   const InventoryState.empty() : this(temperature: 50, time: 3);
 
   InventoryState copyWith({double? temperature, double? time}) {
-    return InventoryState(temperature: temperature ?? this.temperature, time: time ?? this.time);
+    return InventoryState(
+      temperature: temperature ?? this.temperature,
+      time: time ?? this.time,
+    );
   }
 
   @override

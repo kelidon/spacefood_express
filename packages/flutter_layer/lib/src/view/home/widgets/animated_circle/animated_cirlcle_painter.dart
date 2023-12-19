@@ -42,16 +42,16 @@ class _AnimatedCirclePainter extends CustomPainter {
     const double wavesCount = 1;
     const double angleStep = (2 * math.pi) / 360;
 
-    Path path = Path();
+    final Path path = Path();
 
-    double phase = waveAnimation.value * math.pi;
+    final double phase = waveAnimation.value * math.pi;
 
     for (double theta = 0; theta < 2 * math.pi; theta += angleStep) {
-      double waveHeight =
+      final double waveHeight =
           waveAnimation.value * math.sin(theta * wavesCount + phase).abs();
 
-      double x = centerX + (radius + waveHeight) * math.cos(theta);
-      double y = centerY + (radius + waveHeight) * math.sin(theta);
+      final double x = centerX + (radius + waveHeight) * math.cos(theta);
+      final double y = centerY + (radius + waveHeight) * math.sin(theta);
 
       if (theta == 0) {
         path.moveTo(x, y);
@@ -59,8 +59,9 @@ class _AnimatedCirclePainter extends CustomPainter {
         path.lineTo(x, y);
       }
     }
-    canvas.drawPath(path, circlePaint);
-    canvas.drawPath(path, shadowPaint);
+    canvas
+      ..drawPath(path, circlePaint)
+      ..drawPath(path, shadowPaint);
   }
 
   @override

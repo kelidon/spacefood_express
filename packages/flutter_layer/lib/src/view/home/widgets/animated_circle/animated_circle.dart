@@ -3,9 +3,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-part 'functions/animated_circle_functions.dart';
-
 part 'animated_cirlcle_painter.dart';
+
+part 'functions/animated_circle_functions.dart';
 
 class AnimatedCircle extends StatefulWidget {
   const AnimatedCircle({
@@ -35,11 +35,13 @@ class _AnimatedCircleState extends State<AnimatedCircle>
   Widget build(BuildContext context) {
     return Center(
       child: CustomPaint(
-        size: Size(400, 400),
+        size: const Size(400, 400),
         painter: _AnimatedCirclePainter(
           color: _colorAnimation,
           waveAnimation: _waveAnimation,
-          shadowAnimation: _shadowAnimation, shadowSigma: shadowSigma, mainStrokeWidth: mainStrokeWidth,
+          shadowAnimation: _shadowAnimation,
+          shadowSigma: shadowSigma,
+          mainStrokeWidth: mainStrokeWidth,
         ),
       ),
     );

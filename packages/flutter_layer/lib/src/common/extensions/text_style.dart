@@ -6,7 +6,9 @@ extension TextStyleExtension on TextStyle {
   TextStyle get shadowed => copyWith(
         shadows: [
           BoxShadow(
-              color: color ?? Colors.white, blurRadius: 5, spreadRadius: 0),
+            color: color ?? Colors.white,
+            blurRadius: 5,
+          ),
         ],
       );
 }

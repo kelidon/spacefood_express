@@ -2,10 +2,9 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_layer/actors/models/planet_type.dart';
+import 'package:flame_layer/flame_layer/spacefood_game.dart';
 import 'package:flutter/material.dart';
-
-import '../flame_layer/spacefood_game.dart';
-import 'models/planet_type.dart';
 
 class PlanetComponent extends SpriteAnimationComponent
     with HasGameReference<SpaceFoodGame>, CollisionCallbacks {

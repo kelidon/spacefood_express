@@ -1,9 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flame_layer/blocs/game_stats/game_stats_bloc.dart';
+import 'package:flame_layer/flame_layer/level.dart';
 import 'package:flame_layer/utils/audio_manager.dart';
-
-import '../blocs/game_stats/game_stats_bloc.dart';
-import 'level.dart';
 
 class LevelsScene extends PositionComponent
     with FlameBlocListenable<GameStatsBloc, GameStatsState> {
@@ -26,7 +25,7 @@ class LevelsScene extends PositionComponent
 
   @override
   void onNewState(GameStatsState state) {
-    for (int i = 1; i < levels.length; i++) {
+    for (var i = 1; i < levels.length; i++) {
       if (state.level == i + 1) {
         AudioManager.stopBackgroundMusic();
         AudioManager.playBackgroundMusic(Sounds.fromLevel(state.level));

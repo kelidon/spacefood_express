@@ -1,6 +1,6 @@
 name: flutter_layer
 description: "A new Flutter project."
-version: 1.0.0+1
+version: 1.0.0
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -8,14 +8,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.3
   google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  very_good_analysis: ^5.1.0
 
 flutter:
   uses-material-design: true

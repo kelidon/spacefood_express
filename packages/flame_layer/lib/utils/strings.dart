@@ -9,8 +9,10 @@ class Strings {
 
   Map<int, String> negativeFeedback = {
     0: 'It was too long! What we’ve got here is failure to communicate.',
-    1: 'You are late! If you do that again, I’ll introduce you to my friend Johnny.',
-    2: 'You bad guy, you have failed me! I will think several times before ordering from you again.',
+    1: 'You are late! If you do that again, I’ll introduce you to my friend '
+        'Johnny.',
+    2: 'You bad guy, you have failed me! I will think several times before '
+        'ordering from you again.',
     3: 'Frankly, my dear, I don’t give a damn. Your problem.',
     4: 'Snap out of it! You were too slow.',
   };
