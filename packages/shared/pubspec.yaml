@@ -16,3 +16,5 @@ dev_dependencies:
   very_good_analysis: 5.1.0
 
 flutter:
+  assets:
+    - assets/images/

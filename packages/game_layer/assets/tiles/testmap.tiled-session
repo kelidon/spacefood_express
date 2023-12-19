@@ -1,0 +1,53 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "Все файлы (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "#background": {
+            "scaleInDock": 1
+        },
+        "testmap.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.1406,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1578.947368421053,
+                "y": 1657.1834992887625
+            }
+        },
+        "testmap.tmx#background": {
+            "scaleInDock": 0.5305
+        },
+        "testmap.tmx#bg2": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "/Users/mikita/projects/spacefood_express/assets/tiles",
+    "last.imagePath": "/Users/mikita/projects/spacefood_express/assets/images",
+    "map.height": 50,
+    "map.lastUsedExportFilter": "Файлы Tiled карт (*.tmx *.xml)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 50,
+    "openFiles": [
+        "testmap.tmx"
+    ],
+    "project": "testmap.tiled-project",
+    "recentFiles": [
+        "testmap.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
+}

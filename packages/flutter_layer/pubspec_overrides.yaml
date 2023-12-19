@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: shared,flame_layer
+dependency_overrides:
+  flame_layer:
+    path: ../flame_layer
+  shared:
+    path: ../shared

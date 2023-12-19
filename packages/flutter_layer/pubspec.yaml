@@ -11,6 +11,10 @@ dependencies:
   flutter_bloc: 8.1.3
   google_fonts: 6.1.0
 
+  #local packages
+  shared: 1.0.0
+  flame_layer: 1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -18,3 +22,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - ../../packages/shared/assets/

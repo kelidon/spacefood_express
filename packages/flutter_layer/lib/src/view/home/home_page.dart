@@ -3,9 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_layer/src/common/constants/ui_constants.dart';
 import 'package:flutter_layer/src/common/extensions/extensions.dart';
+import 'package:flutter_layer/src/common/routes/app_routes.dart';
 import 'package:flutter_layer/src/view/common/custom_icon_button.dart';
 import 'package:flutter_layer/src/view/common/custom_text_button.dart';
-import 'package:flutter_layer/src/view/home/widgets/animated_circle/animated_circle.dart';
+import 'package:shared/shared.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -34,39 +35,48 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          const AnimatedCircle(),
-          BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaY: blurSigma,
-              sigmaX: blurSigma,
-            ),
-            child: const SizedBox.expand(),
-          ),
-          AnimatedOpacity(
-            opacity: opacity,
-            duration: UIC.commonAnimationDuration,
-            child: Container(
-              width: context.width,
-              height: context.height,
-              color: Colors.black.withOpacity(0.8),
-            ),
-          ),
-          PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: pageController,
-            children: [
-              HomePageMainMenu(
-                pageController: pageController,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: Stack(
+          alignment: Alignment.center,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: AnimatedCircle(
+                sharedAsset: SharedAssets.testPlanet3,
               ),
-              HomePageLevelSelector(
-                pageController: pageController,
+            ),
+            BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaY: blurSigma,
+                sigmaX: blurSigma,
               ),
-            ],
-          ),
-        ],
+              child: const SizedBox.expand(),
+            ),
+            AnimatedOpacity(
+              opacity: opacity,
+              duration: UIC.commonAnimationDuration,
+              child: Container(
+                width: context.width,
+                height: context.height,
+                color: Colors.black.withOpacity(0.8),
+              ),
+            ),
+            PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: pageController,
+              children: [
+                HomePageMainMenu(
+                  pageController: pageController,
+                ),
+                HomePageLevelSelector(
+                  pageController: pageController,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -163,7 +173,9 @@ class HomePageLevelSelector extends StatelessWidget {
                 return Center(
                   child: CustomTextButton(
                     text: 'Level $i',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppRoutes.gameRoute);
+                    },
                   ),
                 );
               },

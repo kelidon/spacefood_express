@@ -1,3 +1,4 @@
+import 'package:flame_layer/flame_layer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layer/src/view/home/home_page.dart';
 
@@ -14,7 +15,7 @@ class AppRoutes {
     final Widget page;
     switch (name) {
       case gameRoute:
-      // page = const GamePage();
+      page = const GamePage();
       case homeRoute:
       default:
         page = const HomePage();
